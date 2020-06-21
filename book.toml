@@ -1,0 +1,15 @@
+[book]
+authors = ["itscomputers"]
+language = "en"
+multilingual = false
+src = "src"
+title = "number theory for programmers"
+
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+mathjax-support = true
+additional-js = ["js/additional.js"]
+
+[output.html.playpen]
+editable = true
