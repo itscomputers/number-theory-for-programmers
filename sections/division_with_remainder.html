@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>division with remainder - number theory for programmers</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html" class="active"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">number theory for programmers</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#division-with-remainder" id="division-with-remainder">division with remainder</a></h1>
+<p>In the <a href="./divisibility.html#divides-exercise">divides function</a> from the last
+section, we employed a <code>while</code> loop.  The eventual termination of the loop
+depends on the following principle.</p>
+<blockquote>
+<p><strong>Archimedes' principle.</strong>
+For an integer \( a \) and a nonzero integer \( b \), there exists a
+multiple of \( b \) which is greater than or equal to \( a \).</p>
+</blockquote>
+<p>This principle is equivalent to the <strong>division algorithm</strong>, which we will
+prove.</p>
+<span id="division-algorithm" />
+<blockquote>
+<p><strong>proposition 2 (division algorithm).</strong>
+For an integer \( a \) and a nonzero integer \( b \), there are unique
+integers \( q \) and \( r \) such that
+\( a = bq + r \) and \( 0 \le r &lt; |b|. \)</p>
+</blockquote>
+<p>Terminology:</p>
+<ul>
+<li>\( a \) is called the <strong>dividend</strong>.</li>
+<li>\( b \) is called the <strong>divisor</strong>.</li>
+<li>\( q \) is called the <strong>quotient</strong>.</li>
+<li>\( r \) is called the <strong>remainder</strong>.</li>
+</ul>
+<p>Before proving the division algorithm, here are a few examples.</p>
+<ul>
+<li>Dividing \( 71 \) by \( 20 \) gives \( 71 = 20(3) + 11 \)</li>
+<li>Dividing \( 71 \) by \( -20 \) gives \( 71 = -20(-3) + 11  \)</li>
+<li>Dividing \( -71 \) by \( 20 \) gives \( -71 = 20(-4) + 9 \)</li>
+<li>Dividing \( -71 \) by \( -20 \) gives \( -71 = -20(4) + 9 \)</li>
+</ul>
+<blockquote>
+<p><em>proof of division algorithm:</em>
+If \( a \ge 0 \), consider the set \( S \), consisting of integers of
+the form \( a - bn \) where \( n \) is an integer, ie,
+\[ S = { a - bn: n \in \mathbf{Z} }. \]
+The intersection of \( S \) the with nonnegative integers is non-empty,
+since \( a \) itself is nonnegative. By the well-ordering principle, there
+must be a unique smallest nonnegative element of \( S \), say
+\( r = a - bq \).  Since \( r - |b| \) is a smaller element of \( S \),
+it must be negative, hence \( r &lt; |b| \).</p>
+<p>If \( a &lt; 0 \), then \( -a \) is positive, which was proven above to be
+expressable as \( -a = bQ + R. \)  If \( R = 0 \), set \( q = -Q \) and
+\( r = 0. \)  Otherwise, set \( r = -R + |b| \) and
+\( q = -Q - |b| / b. \)  In either case, we have
+\[ a = -bQ - R = bq + r \] with \( 0 \le r &lt; |b|. \)</p>
+</blockquote>
+<h2><a class="header" href="#in-code" id="in-code">in code</a></h2>
+<p>In most programming languages, the implementation of a division and remainder
+(modulus) operator likely will not match the specification given by the
+division algorithm: when the dividend or divisor is negative, it may result in
+a negative remainder.</p>
+<p>In ruby, for example, integer division is floor division, so the quotient
+<code>a / b</code> is computed by rounding down the rational number \( a / b \).
+Therefore, the sign of the remainder <code>a % b</code> is the same as the sign of the
+divisor <code>b</code>.</p>
+<table><thead><tr><th align="right"><code>a</code></th><th align="right"><code>b</code></th><th align="right"><code>a / b</code></th><th align="right"><code>a % b</code></th></tr></thead><tbody>
+<tr><td align="right"><code>71</code></td><td align="right"><code>20</code></td><td align="right"><code>3</code></td><td align="right"><code>11</code></td></tr>
+<tr><td align="right"><code>71</code></td><td align="right"><code>-20</code></td><td align="right"><code>-4</code></td><td align="right"><code>-9</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>20</code></td><td align="right"><code>-4</code></td><td align="right"><code>9</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>-20</code></td><td align="right"><code>3</code></td><td align="right"><code>-11</code></td></tr>
+</tbody></table>
+<p>In rust, on the other hand, integer division is truncation, so the quotient
+<code>a / b</code> is computed by rounding the rational number \( a / b \) toward zero.
+Therefore, the sign of the remainder <code>a % b</code> is the same as the sign of the
+dividend <code>a</code>.</p>
+<table><thead><tr><th align="right"><code>a</code></th><th align="right"><code>b</code></th><th align="right"><code>a / b</code></th><th align="right"><code>a % b</code></th></tr></thead><tbody>
+<tr><td align="right"><code>71</code></td><td align="right"><code>20</code></td><td align="right"><code>3</code></td><td align="right"><code>11</code></td></tr>
+<tr><td align="right"><code>71</code></td><td align="right"><code>-20</code></td><td align="right"><code>-3</code></td><td align="right"><code>11</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>20</code></td><td align="right"><code>-3</code></td><td align="right"><code>-11</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>-20</code></td><td align="right"><code>3</code></td><td align="right"><code>-11</code></td></tr>
+</tbody></table>
+<span id="division-algorithm-exercise" />
+<blockquote>
+<p><strong>exercise</strong>:
+Write a <code>div_rem</code> function that takes a dividend <code>a</code> and a nonzero divisor
+<code>b</code> as inputs, and outputs a quotient <code>q</code> and a remainder <code>r</code> satisifying
+the division algorithm.</p>
+</blockquote>
+<p>The division algorithm itself gives the specifications to validate that
+<code>div_rem</code> is implemented correctly.  Following is a test in ruby that asserts
+the properties from the division algorithm and its terminal output.</p>
+<pre><code class="language-ruby">DIV_REM_TEST_INPUTS = [
+  [6723, 220],
+  [-2392, 183],
+  [788, -93],
+  [-5853, -11],
+  [46 * 82, 82],
+]
+
+class TestDivRem &lt; Test::Unit::TestCase
+  def test_div_rem
+    DIV_REM_TEST_INPUTS.each do |(a, b)|
+      quo, rem = div_rem(a, b)
+
+      assert 0 &lt;= rem
+      assert rem &lt; b.abs
+      assert_equal a, b*quo + rem
+
+      puts &quot;#{a} == #{b} * #{quo} + #{rem}&quot;
+    end
+  end
+end
+</code></pre>
+<pre><code>6723 == 220 * 30 + 123
+-2392 == 183 * -14 + 170
+788 == -93 * -8 + 44
+-5853 == -11 * 533 + 10
+-3772 == 82 * 46 + 0
+
+1 tests, 15 assertions, 0 failures, 0 errors
+</code></pre>
+<p>Click the expand button to see an implementation of <code>div_rem</code> in ruby.</p>
+<p><button class="fa fa-expand" onClick="showContent('div_rem')"></button></p>
+<div id="div_rem" style="display: none;">
+<pre><code class="language-ruby">def div_rem(a, b)
+  rem = (a % b) + (b &lt; 0 ? -b : 0)
+  quo = (a - rem) / b
+
+  [quo, rem]
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#divisibility-and-remainders" id="divisibility-and-remainders">divisibility and remainders</a></h2>
+<p>The division algorithm is an extension of the idea of divisibility, as this
+proposition makes clear.</p>
+<blockquote>
+<p><strong>proposition 3.</strong>
+A nonzero integer \( b \) divides an integer \( a \) if and only if the
+division of \( a \) by \( b \) yields a remainder of \( 0 \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+If the division algorithm gives \( a = bq + r \) with \( r = 0\), then
+\( a = bq \), which implies the \( b \mid a \).</p>
+<p>Conversely, if \( b \mid a \), then \( a = bn \) for some \( n \).
+Since the division algorithm produces a unique quotient and remainder, it
+must be true that \( q = n \) and \( r = 0 \).</p>
+</blockquote>
+<span id="exercises" />
+<h2><a class="header" href="#exercises" id="exercises">exercises</a></h2>
+<p>Compute by hand the quotient and remainder when dividing:</p>
+<ol>
+<li>
+<p>\( 345 \) by \( 14 \)</p>
+</li>
+<li>
+<p>\( -872 \) by \( 77 \)</p>
+</li>
+<li>
+<p>\( 7373 \) by \( -205 \)</p>
+</li>
+<li>
+<p>\( -762 \) by \( -11 \)</p>
+</li>
+</ol>
+<p><button onClick="showContent('solutions')">show solutions</button></p>
+<div id="solutions" style="display: none;">
+<ol>
+<li>
+<p>\( 345 = 14(24) + 9 \)</p>
+</li>
+<li>
+<p>\( -872 = 77(-12) + 52 \)</p>
+</li>
+<li>
+<p>\( 7373 = -205(-35) + 198 \)</p>
+</li>
+<li>
+<p>\( -762 = -11(70) + 8 \)</p>
+</li>
+</ol>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../sections/divisibility.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../sections/greatest_common_divisor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../sections/divisibility.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../sections/greatest_common_divisor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../js/additional.js"></script>
+        
+
+        
+
+    </body>
+</html>

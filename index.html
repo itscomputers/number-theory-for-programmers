@@ -1,0 +1,428 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>divisibility - number theory for programmers</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">number theory for programmers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#divisibility" id="divisibility">divisibility</a></h1>
+<p>This study of integers begins with the notion of divisibility: whether the
+division of two integers results in an integer.  Because of the volatile nature
+of division, we frame this question in terms of integer multiplication.</p>
+<blockquote>
+<p>A nonzero integer \( b \) <strong>divides</strong> an integer \( a \) if there exists
+some integer \( n \) such that \( a = bn \).</p>
+</blockquote>
+<p>Here are a few examples:</p>
+<ul>
+<li>15 divides 45 since \( 45 = 15 \cdot 3 \)</li>
+<li>9 divides 45 since \( 45 = 9 \cdot 5 \)</li>
+<li>10 does not divide 45 since 45 is between
+\( 40 = 10 \cdot 4 \) and \( 50 = 10 \cdot 5 \)</li>
+</ul>
+<p>The above definition is synonymous with saying that \( b \)
+may be expressed as a multiple of \( a \).  In fact, the following
+statements are equivalent and mean that \( a \) is can be expressed as
+\( bn \).</p>
+<ul>
+<li>\( b \) divides \( a \)</li>
+<li>\( b \) is a divisor of \( a \)</li>
+<li>\( a \) is divisible by \( b \)</li>
+<li>\( a \) is a multiple of \( b \)</li>
+</ul>
+<p>The notation for this concept is \( b \mid a \), which reads &quot;\( b \)
+divides \( a \)&quot;.  Using this notation, the examples above become:</p>
+<ul>
+<li>\( 15 \mid 45 \) since \( 45 = 15 \cdot 3 \)</li>
+<li>\( 9 \mid 45 \) since \( 45 = 9 \cdot 5 \)</li>
+<li>\( 10 \nmid 45 \) since \( 10 \cdot 4 &lt; 45 &lt; 10 \cdot 5 \)</li>
+</ul>
+<p>Be careful!  This notation may sometimes be confused with the division
+operation. If you see \( 15 / 45 \), it is the operation that returns
+the rational number \( 1/3 \).  If you see \( 15 \mid 45 \), it is the
+statement that \( 45 \) is divisible by \( 15 \), ie, that \( 45 / 15 \)
+is an integer.</p>
+<span id="divides-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Using <strong>only</strong> addition, multiplication, and comparison, write a <code>divides</code>
+function that takes as input two <em>positive</em> integers <code>b</code> and <code>a</code> and returns
+<code>true</code> if <code>b</code> divides <code>a</code> and <code>false</code> otherwise.</p>
+</blockquote>
+<p>With such a <code>divides?</code> function in ruby, the following code should yield the
+terminal output below.</p>
+<pre><code class="language-ruby">DIVIDES_TEST_INPUTS = [
+  [25, 0],
+  [31, 432],
+  [87, 87*58],
+  [99, 9900],
+  [9900, 99],
+]
+
+DIVIDES_TEST_INPUTS.each do |(b, a)|
+  if divides?(b, a)
+    puts &quot;#{b} divides #{a}&quot;
+  else
+    puts &quot;#{b} does not divide #{a}&quot;
+  end
+end
+</code></pre>
+<pre><code>25 divides 0
+31 does not divide 432
+87 divides 5046
+99 divides 9900
+9900 does not divide 99
+</code></pre>
+<p>Click the button below to show an implementation of a simple <code>divides?</code>
+function in ruby.</p>
+<p><button class="fa fa-expand" onClick="showContent('divides')"></button></p>
+<div id="divides" style="display: none;">
+<pre><code class="language-ruby">def divides?(b, a)
+  m = 0
+  while m &lt; a
+    m += b
+  end
+
+  m == a
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#linear-combinations" id="linear-combinations">linear combinations</a></h2>
+<blockquote>
+<p>An <strong>integer linear combination</strong> of integers \( a \) and \( b \) is an
+integer of the form \( ax + by \) where \( x \) and \( y \) are integers.</p>
+</blockquote>
+<p>For example, 11 through 15 can all be expressed as linear
+combinations of 5 and 6.  Here are two examples of each.</p>
+<p>\[\begin{align}
+5(1) + 6(1) &amp;= 11 = 5(7) + 6(-4) \\
+5(0) + 6(2) &amp;= 12 = 5(6) + 6(-3) \\
+5(-1) + 6(3) &amp;= 13 = 5(5) + 6(-2) \\
+5(-2) + 6(4) &amp;= 14 = 5(4) + 6(-1) \\
+5(-3) + 6(5) &amp;= 15 = 5(3) + 6(0) \\
+\end{align}\]</p>
+<p>The following proposition about integer linear combinations will be used
+often.</p>
+<span id="linear-combination" />
+<blockquote>
+<p><strong>proposition 1.</strong>
+If \( d \) is a common divisor of \( a \) and \( b \), then \( d \)
+divides any integer linear combination of \( a \) and \( b \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Suppose that \( d \) divides \( a \) and \( b \).  By definition, there
+exist integers \( m, n \) such that \( a = dm \) and \( b = dn \).  Let
+\( c = ax + by \) be an integer linear combination of \( a \) and
+\( b \).  For any linear combination \( ax + by \),
+\[ ax + by = (dm)x + (dn)y = d(mx + ny). \]
+Since \( mx + ny \) is an integer, the linear combination is divisible by
+\( d \).</p>
+</blockquote>
+<span id="exercises" />
+<h2><a class="header" href="#exercises" id="exercises">exercises</a></h2>
+<ol>
+<li>
+<p>Prove that any nonzero integer divides 0.</p>
+</li>
+<li>
+<p>Prove that 1 and -1 divide any integer.</p>
+</li>
+<li>
+<p>Prove that any nonzero integer divides itself.</p>
+</li>
+<li>
+<p>If \( a \) and \( b \) are positive integers and \( b \) divides \( a
+\), prove that \( b \le a \).</p>
+</li>
+<li>
+<p>Prove that two positive integers that divide each other must be equal.</p>
+</li>
+<li>
+<p>Prove that the <strong>divides</strong> relation is <em>transitive</em>: if \( c \mid b \) and
+\( b \mid a \), prove that \( c \mid a \).</p>
+</li>
+<li>
+<p>If \( d \) divides both \( a \) and \( b \), prove that \( d \)
+divides their sum \( a + b \).</p>
+</li>
+<li>
+<p>Disprove the converse of the previous exercise by producing a
+counter-example.</p>
+</li>
+<li>
+<p>If \( d \) divides either \( a \) or \( b \), prove that \( d \)
+divides their product \( ab \).</p>
+</li>
+<li>
+<p>Disprove the converse of the previous exercise by producing a
+counter-example.</p>
+</li>
+</ol>
+<p><button onClick="showContent('solutions')">show solutions</button></p>
+<div id="solutions" style="display: none;">
+<ol>
+<li>
+<p>For \( n \) nonzero, we have \( 0 = n \cdot 0 \), so \( n \) divides
+\( 0 \).</p>
+</li>
+<li>
+<p>For any \( n \), we have \( n = 1 \cdot n \) and \( n = -1 \cdot -n \),
+so both \( 1 \) and \( -1 \) divide \( n \).</p>
+</li>
+<li>
+<p>For \( n \) nonzero, we have \( n = n \cdot 1 \), so \( n \) divides
+itself.</p>
+</li>
+<li>
+<p>Let \( a \) and \( b \) be positive integers such that
+\( b \mid a \).  Then \( a = bk \) for some integer \( k \).
+Since \( a \) and \( b \) are both positive, then so is \ ( k \).
+This means that \( k \ge 1 \), which implies that \( a = bk \ge b \).</p>
+</li>
+<li>
+<p>Let \( a \) and \( b \) be two positive integers that divide each other.
+From the previous exercise, we have \( a \le b \) and \( b \le a \), so
+\( a \) and \( b \) must be equal.</p>
+</li>
+<li>
+<p>Suppose that \( c \mid b \) and \( b \mid a \).  We can write
+\( c = bm \) and \( b = an \).  Therefore, \( c = (an)m = a(mn) \),
+which proves that \(c \mid a \).</p>
+</li>
+<li>
+<p>Since the sum \( a + b \) is a linear combination of \( a \) and
+\( b \), then the proposition implies that \( a + b \) is divisible by
+any common divisor \( d \) of \( a \) and \( b \).</p>
+</li>
+<li>
+<p>Take \( a = 3 \), \( b = 7 \), and \( d = 5 \).  Then \( d \)
+divides the sum \( a + b = 10 \) but does not divide either \( a \) or
+\( b \).</p>
+</li>
+<li>
+<p>If \( d \) divides \( a \), then \( a = dn \), so \( ab = d(bn) \).
+If \( d \) divides \( b \), then \( b = dm \), so \( ab = d(am) \).
+Either way, \( d \) divides the product \( ab \).</p>
+</li>
+<li>
+<p>Take \( a = 4 \), \( b = 3 \), and \( d = 6 \).  Then \( d \)
+divides the product \( ab = 12 \) but does not divide either \( a \) or
+\( b \).</p>
+</li>
+</ol>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="sections/division_with_remainder.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="sections/division_with_remainder.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="js/additional.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,920 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>number theory for programmers</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">number theory for programmers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#divisibility" id="divisibility">divisibility</a></h1>
+<p>This study of integers begins with the notion of divisibility: whether the
+division of two integers results in an integer.  Because of the volatile nature
+of division, we frame this question in terms of integer multiplication.</p>
+<blockquote>
+<p>A nonzero integer \( b \) <strong>divides</strong> an integer \( a \) if there exists
+some integer \( n \) such that \( a = bn \).</p>
+</blockquote>
+<p>Here are a few examples:</p>
+<ul>
+<li>15 divides 45 since \( 45 = 15 \cdot 3 \)</li>
+<li>9 divides 45 since \( 45 = 9 \cdot 5 \)</li>
+<li>10 does not divide 45 since 45 is between
+\( 40 = 10 \cdot 4 \) and \( 50 = 10 \cdot 5 \)</li>
+</ul>
+<p>The above definition is synonymous with saying that \( b \)
+may be expressed as a multiple of \( a \).  In fact, the following
+statements are equivalent and mean that \( a \) is can be expressed as
+\( bn \).</p>
+<ul>
+<li>\( b \) divides \( a \)</li>
+<li>\( b \) is a divisor of \( a \)</li>
+<li>\( a \) is divisible by \( b \)</li>
+<li>\( a \) is a multiple of \( b \)</li>
+</ul>
+<p>The notation for this concept is \( b \mid a \), which reads &quot;\( b \)
+divides \( a \)&quot;.  Using this notation, the examples above become:</p>
+<ul>
+<li>\( 15 \mid 45 \) since \( 45 = 15 \cdot 3 \)</li>
+<li>\( 9 \mid 45 \) since \( 45 = 9 \cdot 5 \)</li>
+<li>\( 10 \nmid 45 \) since \( 10 \cdot 4 &lt; 45 &lt; 10 \cdot 5 \)</li>
+</ul>
+<p>Be careful!  This notation may sometimes be confused with the division
+operation. If you see \( 15 / 45 \), it is the operation that returns
+the rational number \( 1/3 \).  If you see \( 15 \mid 45 \), it is the
+statement that \( 45 \) is divisible by \( 15 \), ie, that \( 45 / 15 \)
+is an integer.</p>
+<span id="divides-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Using <strong>only</strong> addition, multiplication, and comparison, write a <code>divides</code>
+function that takes as input two <em>positive</em> integers <code>b</code> and <code>a</code> and returns
+<code>true</code> if <code>b</code> divides <code>a</code> and <code>false</code> otherwise.</p>
+</blockquote>
+<p>With such a <code>divides?</code> function in ruby, the following code should yield the
+terminal output below.</p>
+<pre><code class="language-ruby">DIVIDES_TEST_INPUTS = [
+  [25, 0],
+  [31, 432],
+  [87, 87*58],
+  [99, 9900],
+  [9900, 99],
+]
+
+DIVIDES_TEST_INPUTS.each do |(b, a)|
+  if divides?(b, a)
+    puts &quot;#{b} divides #{a}&quot;
+  else
+    puts &quot;#{b} does not divide #{a}&quot;
+  end
+end
+</code></pre>
+<pre><code>25 divides 0
+31 does not divide 432
+87 divides 5046
+99 divides 9900
+9900 does not divide 99
+</code></pre>
+<p>Click the button below to show an implementation of a simple <code>divides?</code>
+function in ruby.</p>
+<p><button class="fa fa-expand" onClick="showContent('divides')"></button></p>
+<div id="divides" style="display: none;">
+<pre><code class="language-ruby">def divides?(b, a)
+  m = 0
+  while m &lt; a
+    m += b
+  end
+
+  m == a
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#linear-combinations" id="linear-combinations">linear combinations</a></h2>
+<blockquote>
+<p>An <strong>integer linear combination</strong> of integers \( a \) and \( b \) is an
+integer of the form \( ax + by \) where \( x \) and \( y \) are integers.</p>
+</blockquote>
+<p>For example, 11 through 15 can all be expressed as linear
+combinations of 5 and 6.  Here are two examples of each.</p>
+<p>\[\begin{align}
+5(1) + 6(1) &amp;= 11 = 5(7) + 6(-4) \\
+5(0) + 6(2) &amp;= 12 = 5(6) + 6(-3) \\
+5(-1) + 6(3) &amp;= 13 = 5(5) + 6(-2) \\
+5(-2) + 6(4) &amp;= 14 = 5(4) + 6(-1) \\
+5(-3) + 6(5) &amp;= 15 = 5(3) + 6(0) \\
+\end{align}\]</p>
+<p>The following proposition about integer linear combinations will be used
+often.</p>
+<span id="linear-combination" />
+<blockquote>
+<p><strong>proposition 1.</strong>
+If \( d \) is a common divisor of \( a \) and \( b \), then \( d \)
+divides any integer linear combination of \( a \) and \( b \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Suppose that \( d \) divides \( a \) and \( b \).  By definition, there
+exist integers \( m, n \) such that \( a = dm \) and \( b = dn \).  Let
+\( c = ax + by \) be an integer linear combination of \( a \) and
+\( b \).  For any linear combination \( ax + by \),
+\[ ax + by = (dm)x + (dn)y = d(mx + ny). \]
+Since \( mx + ny \) is an integer, the linear combination is divisible by
+\( d \).</p>
+</blockquote>
+<span id="exercises" />
+<h2><a class="header" href="#exercises" id="exercises">exercises</a></h2>
+<ol>
+<li>
+<p>Prove that any nonzero integer divides 0.</p>
+</li>
+<li>
+<p>Prove that 1 and -1 divide any integer.</p>
+</li>
+<li>
+<p>Prove that any nonzero integer divides itself.</p>
+</li>
+<li>
+<p>If \( a \) and \( b \) are positive integers and \( b \) divides \( a
+\), prove that \( b \le a \).</p>
+</li>
+<li>
+<p>Prove that two positive integers that divide each other must be equal.</p>
+</li>
+<li>
+<p>Prove that the <strong>divides</strong> relation is <em>transitive</em>: if \( c \mid b \) and
+\( b \mid a \), prove that \( c \mid a \).</p>
+</li>
+<li>
+<p>If \( d \) divides both \( a \) and \( b \), prove that \( d \)
+divides their sum \( a + b \).</p>
+</li>
+<li>
+<p>Disprove the converse of the previous exercise by producing a
+counter-example.</p>
+</li>
+<li>
+<p>If \( d \) divides either \( a \) or \( b \), prove that \( d \)
+divides their product \( ab \).</p>
+</li>
+<li>
+<p>Disprove the converse of the previous exercise by producing a
+counter-example.</p>
+</li>
+</ol>
+<p><button onClick="showContent('solutions')">show solutions</button></p>
+<div id="solutions" style="display: none;">
+<ol>
+<li>
+<p>For \( n \) nonzero, we have \( 0 = n \cdot 0 \), so \( n \) divides
+\( 0 \).</p>
+</li>
+<li>
+<p>For any \( n \), we have \( n = 1 \cdot n \) and \( n = -1 \cdot -n \),
+so both \( 1 \) and \( -1 \) divide \( n \).</p>
+</li>
+<li>
+<p>For \( n \) nonzero, we have \( n = n \cdot 1 \), so \( n \) divides
+itself.</p>
+</li>
+<li>
+<p>Let \( a \) and \( b \) be positive integers such that
+\( b \mid a \).  Then \( a = bk \) for some integer \( k \).
+Since \( a \) and \( b \) are both positive, then so is \ ( k \).
+This means that \( k \ge 1 \), which implies that \( a = bk \ge b \).</p>
+</li>
+<li>
+<p>Let \( a \) and \( b \) be two positive integers that divide each other.
+From the previous exercise, we have \( a \le b \) and \( b \le a \), so
+\( a \) and \( b \) must be equal.</p>
+</li>
+<li>
+<p>Suppose that \( c \mid b \) and \( b \mid a \).  We can write
+\( c = bm \) and \( b = an \).  Therefore, \( c = (an)m = a(mn) \),
+which proves that \(c \mid a \).</p>
+</li>
+<li>
+<p>Since the sum \( a + b \) is a linear combination of \( a \) and
+\( b \), then the proposition implies that \( a + b \) is divisible by
+any common divisor \( d \) of \( a \) and \( b \).</p>
+</li>
+<li>
+<p>Take \( a = 3 \), \( b = 7 \), and \( d = 5 \).  Then \( d \)
+divides the sum \( a + b = 10 \) but does not divide either \( a \) or
+\( b \).</p>
+</li>
+<li>
+<p>If \( d \) divides \( a \), then \( a = dn \), so \( ab = d(bn) \).
+If \( d \) divides \( b \), then \( b = dm \), so \( ab = d(am) \).
+Either way, \( d \) divides the product \( ab \).</p>
+</li>
+<li>
+<p>Take \( a = 4 \), \( b = 3 \), and \( d = 6 \).  Then \( d \)
+divides the product \( ab = 12 \) but does not divide either \( a \) or
+\( b \).</p>
+</li>
+</ol>
+</div>
+<h1><a class="header" href="#division-with-remainder" id="division-with-remainder">division with remainder</a></h1>
+<p>In the <a href="sections/./divisibility.html#divides-exercise">divides function</a> from the last
+section, we employed a <code>while</code> loop.  The eventual termination of the loop
+depends on the following principle.</p>
+<blockquote>
+<p><strong>Archimedes' principle.</strong>
+For an integer \( a \) and a nonzero integer \( b \), there exists a
+multiple of \( b \) which is greater than or equal to \( a \).</p>
+</blockquote>
+<p>This principle is equivalent to the <strong>division algorithm</strong>, which we will
+prove.</p>
+<span id="division-algorithm" />
+<blockquote>
+<p><strong>proposition 2 (division algorithm).</strong>
+For an integer \( a \) and a nonzero integer \( b \), there are unique
+integers \( q \) and \( r \) such that
+\( a = bq + r \) and \( 0 \le r &lt; |b|. \)</p>
+</blockquote>
+<p>Terminology:</p>
+<ul>
+<li>\( a \) is called the <strong>dividend</strong>.</li>
+<li>\( b \) is called the <strong>divisor</strong>.</li>
+<li>\( q \) is called the <strong>quotient</strong>.</li>
+<li>\( r \) is called the <strong>remainder</strong>.</li>
+</ul>
+<p>Before proving the division algorithm, here are a few examples.</p>
+<ul>
+<li>Dividing \( 71 \) by \( 20 \) gives \( 71 = 20(3) + 11 \)</li>
+<li>Dividing \( 71 \) by \( -20 \) gives \( 71 = -20(-3) + 11  \)</li>
+<li>Dividing \( -71 \) by \( 20 \) gives \( -71 = 20(-4) + 9 \)</li>
+<li>Dividing \( -71 \) by \( -20 \) gives \( -71 = -20(4) + 9 \)</li>
+</ul>
+<blockquote>
+<p><em>proof of division algorithm:</em>
+If \( a \ge 0 \), consider the set \( S \), consisting of integers of
+the form \( a - bn \) where \( n \) is an integer, ie,
+\[ S = { a - bn: n \in \mathbf{Z} }. \]
+The intersection of \( S \) the with nonnegative integers is non-empty,
+since \( a \) itself is nonnegative. By the well-ordering principle, there
+must be a unique smallest nonnegative element of \( S \), say
+\( r = a - bq \).  Since \( r - |b| \) is a smaller element of \( S \),
+it must be negative, hence \( r &lt; |b| \).</p>
+<p>If \( a &lt; 0 \), then \( -a \) is positive, which was proven above to be
+expressable as \( -a = bQ + R. \)  If \( R = 0 \), set \( q = -Q \) and
+\( r = 0. \)  Otherwise, set \( r = -R + |b| \) and
+\( q = -Q - |b| / b. \)  In either case, we have
+\[ a = -bQ - R = bq + r \] with \( 0 \le r &lt; |b|. \)</p>
+</blockquote>
+<h2><a class="header" href="#in-code" id="in-code">in code</a></h2>
+<p>In most programming languages, the implementation of a division and remainder
+(modulus) operator likely will not match the specification given by the
+division algorithm: when the dividend or divisor is negative, it may result in
+a negative remainder.</p>
+<p>In ruby, for example, integer division is floor division, so the quotient
+<code>a / b</code> is computed by rounding down the rational number \( a / b \).
+Therefore, the sign of the remainder <code>a % b</code> is the same as the sign of the
+divisor <code>b</code>.</p>
+<table><thead><tr><th align="right"><code>a</code></th><th align="right"><code>b</code></th><th align="right"><code>a / b</code></th><th align="right"><code>a % b</code></th></tr></thead><tbody>
+<tr><td align="right"><code>71</code></td><td align="right"><code>20</code></td><td align="right"><code>3</code></td><td align="right"><code>11</code></td></tr>
+<tr><td align="right"><code>71</code></td><td align="right"><code>-20</code></td><td align="right"><code>-4</code></td><td align="right"><code>-9</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>20</code></td><td align="right"><code>-4</code></td><td align="right"><code>9</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>-20</code></td><td align="right"><code>3</code></td><td align="right"><code>-11</code></td></tr>
+</tbody></table>
+<p>In rust, on the other hand, integer division is truncation, so the quotient
+<code>a / b</code> is computed by rounding the rational number \( a / b \) toward zero.
+Therefore, the sign of the remainder <code>a % b</code> is the same as the sign of the
+dividend <code>a</code>.</p>
+<table><thead><tr><th align="right"><code>a</code></th><th align="right"><code>b</code></th><th align="right"><code>a / b</code></th><th align="right"><code>a % b</code></th></tr></thead><tbody>
+<tr><td align="right"><code>71</code></td><td align="right"><code>20</code></td><td align="right"><code>3</code></td><td align="right"><code>11</code></td></tr>
+<tr><td align="right"><code>71</code></td><td align="right"><code>-20</code></td><td align="right"><code>-3</code></td><td align="right"><code>11</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>20</code></td><td align="right"><code>-3</code></td><td align="right"><code>-11</code></td></tr>
+<tr><td align="right"><code>-71</code></td><td align="right"><code>-20</code></td><td align="right"><code>3</code></td><td align="right"><code>-11</code></td></tr>
+</tbody></table>
+<span id="division-algorithm-exercise" />
+<blockquote>
+<p><strong>exercise</strong>:
+Write a <code>div_rem</code> function that takes a dividend <code>a</code> and a nonzero divisor
+<code>b</code> as inputs, and outputs a quotient <code>q</code> and a remainder <code>r</code> satisifying
+the division algorithm.</p>
+</blockquote>
+<p>The division algorithm itself gives the specifications to validate that
+<code>div_rem</code> is implemented correctly.  Following is a test in ruby that asserts
+the properties from the division algorithm and its terminal output.</p>
+<pre><code class="language-ruby">DIV_REM_TEST_INPUTS = [
+  [6723, 220],
+  [-2392, 183],
+  [788, -93],
+  [-5853, -11],
+  [46 * 82, 82],
+]
+
+class TestDivRem &lt; Test::Unit::TestCase
+  def test_div_rem
+    DIV_REM_TEST_INPUTS.each do |(a, b)|
+      quo, rem = div_rem(a, b)
+
+      assert 0 &lt;= rem
+      assert rem &lt; b.abs
+      assert_equal a, b*quo + rem
+
+      puts &quot;#{a} == #{b} * #{quo} + #{rem}&quot;
+    end
+  end
+end
+</code></pre>
+<pre><code>6723 == 220 * 30 + 123
+-2392 == 183 * -14 + 170
+788 == -93 * -8 + 44
+-5853 == -11 * 533 + 10
+-3772 == 82 * 46 + 0
+
+1 tests, 15 assertions, 0 failures, 0 errors
+</code></pre>
+<p>Click the expand button to see an implementation of <code>div_rem</code> in ruby.</p>
+<p><button class="fa fa-expand" onClick="showContent('div_rem')"></button></p>
+<div id="div_rem" style="display: none;">
+<pre><code class="language-ruby">def div_rem(a, b)
+  rem = (a % b) + (b &lt; 0 ? -b : 0)
+  quo = (a - rem) / b
+
+  [quo, rem]
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#divisibility-and-remainders" id="divisibility-and-remainders">divisibility and remainders</a></h2>
+<p>The division algorithm is an extension of the idea of divisibility, as this
+proposition makes clear.</p>
+<blockquote>
+<p><strong>proposition 3.</strong>
+A nonzero integer \( b \) divides an integer \( a \) if and only if the
+division of \( a \) by \( b \) yields a remainder of \( 0 \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+If the division algorithm gives \( a = bq + r \) with \( r = 0\), then
+\( a = bq \), which implies the \( b \mid a \).</p>
+<p>Conversely, if \( b \mid a \), then \( a = bn \) for some \( n \).
+Since the division algorithm produces a unique quotient and remainder, it
+must be true that \( q = n \) and \( r = 0 \).</p>
+</blockquote>
+<span id="exercises" />
+<h2><a class="header" href="#exercises-1" id="exercises-1">exercises</a></h2>
+<p>Compute by hand the quotient and remainder when dividing:</p>
+<ol>
+<li>
+<p>\( 345 \) by \( 14 \)</p>
+</li>
+<li>
+<p>\( -872 \) by \( 77 \)</p>
+</li>
+<li>
+<p>\( 7373 \) by \( -205 \)</p>
+</li>
+<li>
+<p>\( -762 \) by \( -11 \)</p>
+</li>
+</ol>
+<p><button onClick="showContent('solutions')">show solutions</button></p>
+<div id="solutions" style="display: none;">
+<ol>
+<li>
+<p>\( 345 = 14(24) + 9 \)</p>
+</li>
+<li>
+<p>\( -872 = 77(-12) + 52 \)</p>
+</li>
+<li>
+<p>\( 7373 = -205(-35) + 198 \)</p>
+</li>
+<li>
+<p>\( -762 = -11(70) + 8 \)</p>
+</li>
+</ol>
+</div>
+<h1><a class="header" href="#greatest-common-divisor" id="greatest-common-divisor">greatest common divisor</a></h1>
+<blockquote>
+<p>A <strong>common divisor</strong> of two integers \( a \) and \( b \) is an integer
+\( d \) such that \( d \mid a \) and \( d \mid b. \)  The <strong>greatest
+common divisor</strong> of \( a \) and \( b \) is their largest positive common
+divisor.</p>
+</blockquote>
+<ul>
+<li>
+<p>The notation for the greatest common divisor of \( a \) and \( b \) is
+\( \gcd(a, b) \).</p>
+</li>
+<li>
+<p>By definition, the greatest common divisor of two integers is independent of
+the sign of the two integers --- the gcd is the same if you replace
+\( a \) with \( -a \) or \( b \) with \( -b \).</p>
+</li>
+<li>
+<p>The definition of gcd does not make sense if \( a \) and \( b \) are both
+equal to \( 0 \).  The assumption for the rest of the section is that at
+least one of them is nonzero.</p>
+</li>
+</ul>
+<p>The existence of a greatest common divisor stems from the following fact: every
+pair of integers has 1 as a positive common divisor, and can only have finitely
+many positive common divisors since any positive divisor of an integer is less
+than or equal to its absolute value.</p>
+<h2><a class="header" href="#naive-computation" id="naive-computation">naive computation</a></h2>
+<p>The greatest common divisor can be computed naively by finding the positive
+divisors of each number and taking the intersection of the two sets.  For
+example, to compute \( \gcd(322, 70) \)</p>
+<ul>
+<li>
+<p>the positive divisors of \( 322 \) are
+\( \{ 1, 2, 7, 14, 23, 46, 161, 322 \} \)</p>
+</li>
+<li>
+<p>the positive divisors of \( 70 \) are
+\( \{ 1, 2, 5, 7, 10, 14, 35, 70 \} \)</p>
+</li>
+<li>
+<p>the positive common divisors of \( 322 \) and \( 70 \) are
+\( \{ 1, 2, 7, 14 \} \)</p>
+</li>
+<li>
+<p>therefore, the greatest common divisor is \( \gcd(322, 70) = 14 \)</p>
+</li>
+</ul>
+<span id="naive-gcd-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write a <code>naive_gcd</code> function that returns the greatest common divisor of two
+integer inputs.  It should only rely on divisibility checks.</p>
+</blockquote>
+<p><button class="fa fa-expand" onClick="showContent('naive_gcd')"></button></p>
+<div id="naive_gcd" style="display: none;">
+<pre><code class="language-ruby">def naive_gcd(a, b)
+  divisor = 1
+  upper_bound = [a.abs, b.abs].min
+  (2..upper_bound).each do |i|
+    if a % i == 0 &amp;&amp; b % i == 0
+      divisor = i
+    end
+  end
+
+  divisor
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#euclidean-algorithm" id="euclidean-algorithm">Euclidean algorithm</a></h2>
+<p>This naive gcd algorithm is slow, growing linearly in the size of the smaller
+of the two integers.  The next proposition is instrumental in developing a more
+efficient algorithm to compute the gcd.</p>
+<blockquote>
+<p><strong>proposition 4.</strong>
+If \( a = bq + r \), then \( \gcd(a, b) = \gcd(b, r) \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Since \( a = bq + r \) is a linear combination of \( b \) and \( r \),
+any common divisor of \( b \) and \( r \) must also be a divisor of
+\( a \).</p>
+<p>Additionally, since \( r = a - bq \) is a linear combination of \( a \)
+and \( b \), any common divisor of \( a \) and \( b \) must also be a
+divisor of \( r \).</p>
+<p>Taken together, the set of common divisors of \( a, b \) must be equal
+to the set of common divisors of \( b, r \).  Therefore, \( \gcd(a, b) \)
+must be equal to \( \gcd(b, r) \).</p>
+</blockquote>
+<p>This proposition combined with the division algorithm gives an efficient method
+for computing the greatest common divisor.  Each time we use the division
+algorithm, this proposition will give a smaller pair of numbers for computing
+the greatest common divisor, since the division algorithm guarantees that the
+remainder is smaller than the divisor in absolute value.</p>
+<p>The <strong>Euclidean algorithm</strong> is repeated application of the division algorithm;
+at each stage, we replace \( a, b \) with \( b, r \) until we reach a
+remainder of \( 0 \).  At that point the gcd is trivial to compute.</p>
+<p>As an example, we will calculate \( \gcd(322, 70) \) again, this time using the
+Euclidean algorithm.  The left side of the table has each of the division
+algorithm steps.  The right side has the greatest common divisor simplification
+resulting from the division algorithm.</p>
+<table><thead><tr><th align="right">division w/ remainder</th><th align="left">simplifed gcd</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="left">\( \gcd(322, 70) \)</td></tr>
+<tr><td align="right">\( 322 = 70(4) + 42 \)</td><td align="left">\( = \gcd(70, 42) \)</td></tr>
+<tr><td align="right">\( 70 = 42(1) + 28 \)</td><td align="left">\( = \gcd(42, 28) \)</td></tr>
+<tr><td align="right">\( 42 = 28(1) + 14 \)</td><td align="left">\( = \gcd(28, 14) \)</td></tr>
+<tr><td align="right">\( 28 = 14(2) +  0 \)</td><td align="left">\( = \gcd(14, 0) \)</td></tr>
+<tr><td align="right"></td><td align="left">\( = 14 \)</td></tr>
+</tbody></table>
+<p>In the Euclidean algorithm, the last nonzero remainder is the gcd of the
+original two integers.  Of extreme importance is the fact that the gcd is
+computed without explicitly finding <strong>any</strong> of the divisors.</p>
+<span id="euclidean-algorithm-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write a <code>euclidean_algorithm</code> function that prints the division algorithm
+result from each step.</p>
+</blockquote>
+<p>Running the following code should produce the output below.</p>
+<pre><code class="language-ruby">euclidean_algorithm(239847, 95832)
+</code></pre>
+<pre><code>239847 == 95832 * 2 + 48183
+95832 == 48183 * 1 + 47649
+48183 == 47649 * 1 + 534
+47649 == 534 * 89 + 123
+534 == 123 * 4 + 42
+123 == 42 * 2 + 39
+42 == 39 * 1 + 3
+39 == 3 * 13 + 0
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('euclidean_algorithm')"></button></p>
+<div id="euclidean_algorithm" style="display: none;">
+<pre><code class="language-ruby">def euclidean_algorithm(a, b)
+  while b != 0
+    quo, rem = div_rem(a, b)
+    puts &quot;#{a} == #{b} * #{quo} + #{rem}&quot;
+    a, b = b, rem
+  end
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#computation-of-gcd" id="computation-of-gcd">computation of gcd</a></h2>
+<p>As mentioned, the Euclidean algorithm gives an algorithm to compute the
+greatest common divisor.  One formulation of this algorithm is the following:</p>
+<span id="euclidean-algorithm" />
+<blockquote>
+<p>To compute \( \gcd(a, b) \)</p>
+<ol>
+<li>
+<p>If \( b = 0, \) return \( \vert a \vert \).</p>
+</li>
+<li>
+<p>If \( b \ne 0 \), compute \( a = bq + r \) and return to step 1,
+replacing the pair \( (a, b) \) with \( (b, r) \).</p>
+</li>
+</ol>
+</blockquote>
+<p>This gcd algorithm terminates after finitely many steps: since the
+remainders form a decreasing sequence of positive integers, there
+can only be finitely many of them.</p>
+<p>As mentioned before, in some programming languages, the modulus operator may
+return a negative remainder when dealing with negative values.  However, the
+result of <code>a % b</code> is still smaller than \( b \) in absolute value, so
+repeated applications of the modulus operator will also terminate after
+finitely many steps.  Since the proposition above applies regardless of whether
+\( a = bq + r \) comes from the division algorithm, the greatest common
+divisor algorithm may be implemented using <strong>only</strong> the modulus operator.</p>
+<p>For example, here is the same table as above, but instead of performing the
+whole division algorithm at each stage, we use only the modulus operator.</p>
+<table><thead><tr><th align="right">modulus operator</th><th align="left">simplified gcd</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="left">\( \gcd(322, 70) \)</td></tr>
+<tr><td align="right"><code>322 % 70 ~&gt; 42</code></td><td align="left">\( = \gcd(70, 42) \)</td></tr>
+<tr><td align="right"><code>70 % 42 ~&gt; 28</code></td><td align="left">\( = \gcd(42, 28) \)</td></tr>
+<tr><td align="right"><code>42 % 28 ~&gt; 14</code></td><td align="left">\( = \gcd(28, 14) \)</td></tr>
+<tr><td align="right"><code>28 % 14 ~&gt; 0</code></td><td align="left">\( = \gcd(14, 0) \)</td></tr>
+<tr><td align="right"></td><td align="left">\( = 14 \)</td></tr>
+</tbody></table>
+<p>Here is the same algorithm, rephrased.</p>
+<blockquote>
+<p>To compute <code>gcd(a, b)</code></p>
+<ol>
+<li>
+<p>If <code>b == 0</code>  return <code>abs(a)</code>.</p>
+</li>
+<li>
+<p>If <code>b != 0</code>, replace <code>(a, b)</code> with <code>(b, a % b)</code> and return to step 1.</p>
+</li>
+</ol>
+</blockquote>
+<span id="gcd-exercise" />
+<h2><a class="header" href="#in-code-1" id="in-code-1">in code</a></h2>
+<blockquote>
+<p><strong>exercise.</strong>
+Write a <code>gcd</code> function that uses the modulus operator: it should take two
+integer inputs and produce their greatest common divisor.  Remember that
+\( \gcd(0, 0) \) is undefined.</p>
+</blockquote>
+<p>For testing, we will verify some of the essential properties of the greatest
+common divisor as well as some specific examples.  The last property in the
+test is proved in <a href="sections/greatest_common_divisor.html#gcd-property">proposition 5</a> below.  In my ruby
+implementation tested below, <code>nil</code> is returned when the inputs are both zero.
+You may opt to do some error handling instead a null return value.</p>
+<pre><code class="language-ruby">GCD_TEST_INPUTS = [
+  [6723, 220],
+  [-2392, 183],
+  [788, -93],
+  [-5853, -11],
+  [46 * 82, 82],
+]
+
+class TestGcd &lt; Test::Unit::TestCase
+  def test_gcd
+    GCD_TEST_INPUTS.each do |(a, b)|
+      d = gcd(a, b)
+      assert d &gt; 0
+      assert a % d == 0
+      assert b % d == 0
+      assert_equal 1, gcd(a/d, b/d)
+    end
+  end
+
+  def test_gcd_explicit
+    assert_nil gcd(0, 0)
+
+    assert_equal 5, gcd(5, 0)
+    assert_equal 5, gcd(-5, 0)
+    assert_equal 5, gcd(0, 5)
+    assert_equal 5, gcd(0, -5)
+
+    assert_equal 3, gcd(6, 3)
+    assert_equal 3, gcd(-6, 3)
+    assert_equal 3, gcd(6, -3)
+    assert_equal 3, gcd(-6, -3)
+
+    assert_equal 14, gcd(322, 70)
+    assert_equal 14, gcd(-322, 70)
+    assert_equal 14, gcd(322, -70)
+    assert_equal 14, gcd(-322, -70)
+  end
+end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('gcd')"></button></p>
+<div id="gcd" style="display: none;">
+<pre><code class="language-ruby">def gcd(a, b)
+  return if a == 0 &amp;&amp; b == 0
+
+  while b != 0
+    a, b = b, a % b
+  end
+
+  a.abs
+end
+</code></pre>
+</div>
+<p>This new algorithm to find the greatest common divisor is extremely fast.  It
+can be proved that it grows logarithmically in the size of the smaller of the
+two inputs, which is a vast improvement over the linear growth of the naive gcd
+function we wrote.</p>
+<h2><a class="header" href="#a-property-of-the-gcd" id="a-property-of-the-gcd">a property of the gcd</a></h2>
+<span id="gcd-property" />
+<blockquote>
+<p><strong>proposition 5.</strong>
+If \( d = \gcd(a, b) \), then \( \gcd({a \over d}, {b \over d} ) = 1. \)</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Let \( k = \gcd({a \over d}, {b \over d}) \).  Then
+\( {a \over d} = km \) and \( {b \over d} = kn \).  This implies that
+\( a = kdm \) and \( b = kdn \), so \( kd \) is a common divisor of
+\( a \) and \( b \).  If \( k \) were larger than \( 1 \), then
+\( kd \) would be a larger common divisor than the greatest common divisor
+\( d \), a contradiction.</p>
+</blockquote>
+<span id="exercises" />
+<h2><a class="header" href="#exercises-2" id="exercises-2">exercises</a></h2>
+<ol>
+<li>
+<p>Explain why \( \gcd(0, 0) \) is undefined.</p>
+</li>
+<li>
+<p>If \( a \) is nonzero, prove that \( \gcd(a, 0) = \vert a \vert \).</p>
+</li>
+<li>
+<p>If \( b \mid a \), prove that \( \gcd(a, b) = \vert b \vert \).</p>
+</li>
+<li>
+<p>Benchmark <code>gcd</code> vs <code>naive_gcd</code> to convince yourself of the stated time
+complexity.</p>
+</li>
+</ol>
+<p><button onClick="showContent('solutions')">show solutions</button></p>
+<div id="solutions" style="display: none;">
+<ol>
+<li>
+<p>Since every integer divides \( 0 \), then every integer is a common
+divisor of \( 0 \) and \( 0 \), so there is no <em>greatest</em> common
+divisor.</p>
+</li>
+<li>
+<p>Again, since every integer divides \( 0 \), the set of common divisors of
+\( 0 \) and an integer \( a \) is equal to the set of divisors of
+\( a \).  The largest divisor of \( a \) is its absolute value, so that
+must be the gcd.</p>
+</li>
+<li>
+<p>The greatest common divisor is less than or equal to the absolute value of
+the smaller of the two integers.  If \( b \) divides \( a \), then
+\( b \) must be smaller in absolute value.  Therefore, the gcd is at most
+\( \vert b \vert \).  In addition, since \( b \) divides \( a \), we
+know that \( \vert b \vert \) divides \( a \), which proves that
+\( \gcd(a, b) = \vert b \vert \).</p>
+</li>
+</ol>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="js/additional.js"></script>
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
