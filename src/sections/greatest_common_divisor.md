@@ -59,6 +59,8 @@ This naive gcd algorithm is slow, growing linearly in the size of the smaller
 of the two integers.  The next proposition is instrumental in developing a more
 efficient algorithm to compute the gcd.
 
+<span id="division-algorithm-and-gcd" />
+
 > **proposition 4.**
 > If \\( a = bq + r \\), then \\( \gcd(a, b) = \gcd(b, r) \\).
 
@@ -237,7 +239,11 @@ function we wrote.
 
 3. If \\( b \mid a \\), prove that \\( \gcd(a, b) = \vert b \vert \\).
 
-4. Benchmark `gcd` vs `naive_gcd` to convince yourself of the stated time
+4. Prove that every common divisor of two integers divides their greatest
+   common divisor.  (Hint: look over the proof of
+   [proposition 4](#division-algorithm-and-gcd).)
+
+5. Benchmark `gcd` vs `naive_gcd` to convince yourself of the stated time
    complexity.
 
 <button onClick="showContent('solutions')">show solutions</button>
@@ -258,5 +264,13 @@ function we wrote.
    \\( \vert b \vert \\).  In addition, since \\( b \\) divides \\( a \\), we
    know that \\( \vert b \vert \\) divides \\( a \\), which proves that
    \\( \gcd(a, b) = \vert b \vert \\).
+
+4. In the course of proving [proposition 4](#division-algorithm-and-gcd), we
+   noted that the set of common divisors of \\( a, b \\) is equal to the set of
+   common divisors of \\( b, r \\) if \\( a = qb + r \\).  Repeating the
+   division algorithm as we do in the Euclidean algorithm, we eventually find
+   that the common divisors of two integers is equal to the set of divisors of
+   their gcd and zero.  This proves that each common divisor divides the
+   greatest common divisor.
 
 </div>
