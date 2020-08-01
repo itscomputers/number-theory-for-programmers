@@ -86,20 +86,12 @@ dividend `a`.
 
 The division algorithm itself gives the specifications to validate that
 `div_rem` is implemented correctly.  Following is a test in ruby that asserts
-the properties from the division algorithm and its terminal output.
+the properties from the division algorithm for some test inputs.  Note that I
+am specifically suppressing test inputs where the arguments could be zero since
+`div_rem(a, b)` is undefined when `b == 0`.
 
 ```ruby
-{{#include ../ruby/division.rb:41:61}}
-```
-
-```
-6723 == 220 * 30 + 123
--2392 == 183 * -14 + 170
-788 == -93 * -8 + 44
--5853 == -11 * 533 + 10
--3772 == 82 * 46 + 0
-
-1 tests, 15 assertions, 0 failures, 0 errors
+{{#include ../ruby/division.rb:74:82}}
 ```
 
 Click the expand button to see an implementation of `div_rem` in ruby.
@@ -108,7 +100,7 @@ Click the expand button to see an implementation of `div_rem` in ruby.
 <div id="div_rem" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:34:39}}
+{{#include ../ruby/division.rb:65:71}}
 ```
 
 </div>

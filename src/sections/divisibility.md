@@ -45,7 +45,7 @@ With such a `divides?` function in ruby, the following code should yield the
 terminal output below.
 
 ```ruby
-{{#include ../ruby/division.rb:15:29}}
+{{#include ../ruby/division.rb:47:59}}
 ```
 
 ```
@@ -63,7 +63,7 @@ function in ruby.
 <div id="divides" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:6:13}}
+{{#include ../ruby/division.rb:37:44}}
 ```
 
 </div>

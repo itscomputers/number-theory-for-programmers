@@ -1,9 +1,8 @@
 # greatest common divisor
 
-> A **common divisor** of two integers \\( a \\) and \\( b \\) is an integer
-> \\( d \\) such that \\( d \mid a \\) and \\( d \mid b. \\)  The **greatest
-> common divisor** of \\( a \\) and \\( b \\) is their largest positive common
-> divisor.
+> A **common divisor** of two integers is an integer that divdes both integer.
+> The **greatest common divisor** of two integers is their largest positive
+> common divisor.
 
 - The notation for the greatest common divisor of \\( a \\) and \\( b \\) is
   \\( \gcd(a, b) \\).
@@ -48,7 +47,7 @@ example, to compute \\( \gcd(322, 70) \\)
 <div id="naive_gcd" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:66:76}}
+{{#include ../ruby/division.rb:88:98}}
 ```
 
 </div>
@@ -114,7 +113,7 @@ computed without explicitly finding **any** of the divisors.
 Running the following code should produce the output below.
 
 ```ruby
-{{#include ../ruby/division.rb:89}}
+{{#include ../ruby/division.rb:112}}
 ```
 
 ```
@@ -132,7 +131,7 @@ Running the following code should produce the output below.
 <div id="euclidean_algorithm" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:81:87}}
+{{#include ../ruby/division.rb:103:109}}
 ```
 
 </div>
@@ -193,18 +192,18 @@ Here is the same algorithm, rephrased.
 For testing, we will verify some of the essential properties of the greatest
 common divisor as well as some specific examples.  The last property in the
 test is proved in [proposition 5](#gcd-property) below.  In my ruby
-implementation tested below, `nil` is returned when the inputs are both zero.
-You may opt to do some error handling instead a null return value.
+implementation, `nil` is returned when the inputs are both zero.  You may opt
+to do some error handling instead a null return value.
 
 ```ruby
-{{#include ../ruby/division.rb:104:141}}
+{{#include ../ruby/division.rb:129:156}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('gcd')"></button>
 <div id="gcd" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:94:102}}
+{{#include ../ruby/division.rb:118:126}}
 ```
 
 </div>
