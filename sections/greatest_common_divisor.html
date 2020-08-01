@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html" class="active"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html" class="active"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="../sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="../sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -152,10 +152,9 @@
                     <main>
                         <h1><a class="header" href="#greatest-common-divisor" id="greatest-common-divisor">greatest common divisor</a></h1>
 <blockquote>
-<p>A <strong>common divisor</strong> of two integers \( a \) and \( b \) is an integer
-\( d \) such that \( d \mid a \) and \( d \mid b. \)  The <strong>greatest
-common divisor</strong> of \( a \) and \( b \) is their largest positive common
-divisor.</p>
+<p>A <strong>common divisor</strong> of two integers is an integer that divdes both integer.
+The <strong>greatest common divisor</strong> of two integers is their largest positive
+common divisor.</p>
 </blockquote>
 <ul>
 <li>
@@ -223,6 +222,7 @@ end
 <p>This naive gcd algorithm is slow, growing linearly in the size of the smaller
 of the two integers.  The next proposition is instrumental in developing a more
 efficient algorithm to compute the gcd.</p>
+<span id="division-algorithm-and-gcd" />
 <blockquote>
 <p><strong>proposition 4.</strong>
 If \( a = bq + r \), then \( \gcd(a, b) = \gcd(b, r) \).</p>
@@ -269,7 +269,7 @@ Write a <code>euclidean_algorithm</code> function that prints the division algor
 result from each step.</p>
 </blockquote>
 <p>Running the following code should produce the output below.</p>
-<pre><code class="language-ruby">euclidean_algorithm(239847, 95832)
+<pre><code class="language-ruby">  euclidean_algorithm(239847, 95832)
 </code></pre>
 <pre><code>239847 == 95832 * 2 + 48183
 95832 == 48183 * 1 + 47649
@@ -350,19 +350,10 @@ integer inputs and produce their greatest common divisor.  Remember that
 <p>For testing, we will verify some of the essential properties of the greatest
 common divisor as well as some specific examples.  The last property in the
 test is proved in <a href="#gcd-property">proposition 5</a> below.  In my ruby
-implementation tested below, <code>nil</code> is returned when the inputs are both zero.
-You may opt to do some error handling instead a null return value.</p>
-<pre><code class="language-ruby">GCD_TEST_INPUTS = [
-  [6723, 220],
-  [-2392, 183],
-  [788, -93],
-  [-5853, -11],
-  [46 * 82, 82],
-]
-
-class TestGcd &lt; Test::Unit::TestCase
-  def test_gcd
-    GCD_TEST_INPUTS.each do |(a, b)|
+implementation, <code>nil</code> is returned when the inputs are both zero.  You may opt
+to do some error handling instead a null return value.</p>
+<pre><code class="language-ruby">  def test_gcd
+    test_inputs.each do |(a, b)|
       d = gcd(a, b)
       assert d &gt; 0
       assert a % d == 0
@@ -374,22 +365,21 @@ class TestGcd &lt; Test::Unit::TestCase
   def test_gcd_explicit
     assert_nil gcd(0, 0)
 
-    assert_equal 5, gcd(5, 0)
-    assert_equal 5, gcd(-5, 0)
-    assert_equal 5, gcd(0, 5)
-    assert_equal 5, gcd(0, -5)
+    [[10, 0], [-10, 0]].each do |(a, b)|
+      assert_equal 10, gcd(a, b)
+      assert_equal 10, gcd(b, a)
+    end
 
-    assert_equal 3, gcd(6, 3)
-    assert_equal 3, gcd(-6, 3)
-    assert_equal 3, gcd(6, -3)
-    assert_equal 3, gcd(-6, -3)
+    [[6, 3], [-6, 3], [6, -3], [-6, -3]].each do |(a, b)|
+      assert_equal 3, gcd(a, b)
+      assert_equal 3, gcd(b, a)
+    end
 
-    assert_equal 14, gcd(322, 70)
-    assert_equal 14, gcd(-322, 70)
-    assert_equal 14, gcd(322, -70)
-    assert_equal 14, gcd(-322, -70)
+    [[322, 70], [-322, 70], [322, -70], [-322, -70]].each do |(a, b)|
+      assert_equal 14, gcd(a, b)
+      assert_equal 14, gcd(b, a)
+    end
   end
-end
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('gcd')"></button></p>
 <div id="gcd" style="display: none;">
@@ -436,6 +426,11 @@ Let \( k = \gcd({a \over d}, {b \over d}) \).  Then
 <p>If \( b \mid a \), prove that \( \gcd(a, b) = \vert b \vert \).</p>
 </li>
 <li>
+<p>Prove that every common divisor of two integers divides their greatest
+common divisor.  (Hint: look over the proof of
+<a href="#division-algorithm-and-gcd">proposition 4</a>.)</p>
+</li>
+<li>
 <p>Benchmark <code>gcd</code> vs <code>naive_gcd</code> to convince yourself of the stated time
 complexity.</p>
 </li>
@@ -462,6 +457,15 @@ the smaller of the two integers.  If \( b \) divides \( a \), then
 know that \( \vert b \vert \) divides \( a \), which proves that
 \( \gcd(a, b) = \vert b \vert \).</p>
 </li>
+<li>
+<p>In the course of proving <a href="#division-algorithm-and-gcd">proposition 4</a>, we
+noted that the set of common divisors of \( a, b \) is equal to the set of
+common divisors of \( b, r \) if \( a = qb + r \).  Repeating the
+division algorithm as we do in the Euclidean algorithm, we eventually find
+that the common divisors of two integers is equal to the set of divisors of
+their gcd and zero.  This proves that each common divisor divides the
+greatest common divisor.</p>
+</li>
 </ol>
 </div>
 
@@ -476,6 +480,10 @@ know that \( \vert b \vert \) divides \( a \), which proves that
                         
 
                         
+                            <a rel="next" href="../sections/bezouts_identity.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -489,6 +497,10 @@ know that \( \vert b \vert \) divides \( a \), which proves that
                     </a>
                 
 
+                
+                    <a rel="next" href="../sections/bezouts_identity.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

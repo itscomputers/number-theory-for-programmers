@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html" class="active"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html" class="active"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="../sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="../sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -196,21 +196,19 @@ function that takes as input two <em>positive</em> integers <code>b</code> and <
 </blockquote>
 <p>With such a <code>divides?</code> function in ruby, the following code should yield the
 terminal output below.</p>
-<pre><code class="language-ruby">DIVIDES_TEST_INPUTS = [
-  [25, 0],
-  [31, 432],
-  [87, 87*58],
-  [99, 9900],
-  [9900, 99],
-]
-
-DIVIDES_TEST_INPUTS.each do |(b, a)|
-  if divides?(b, a)
-    puts &quot;#{b} divides #{a}&quot;
-  else
-    puts &quot;#{b} does not divide #{a}&quot;
+<pre><code class="language-ruby">  [
+    [25, 0],
+    [31, 432],
+    [87, 87*58],
+    [99, 9900],
+    [9900, 99],
+  ].each do |(b, a)|
+    if divides?(b, a)
+      puts &quot;#{b} divides #{a}&quot;
+    else
+      puts &quot;#{b} does not divide #{a}&quot;
+    end
   end
-end
 </code></pre>
 <pre><code>25 divides 0
 31 does not divide 432

@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -198,21 +198,19 @@ function that takes as input two <em>positive</em> integers <code>b</code> and <
 </blockquote>
 <p>With such a <code>divides?</code> function in ruby, the following code should yield the
 terminal output below.</p>
-<pre><code class="language-ruby">DIVIDES_TEST_INPUTS = [
-  [25, 0],
-  [31, 432],
-  [87, 87*58],
-  [99, 9900],
-  [9900, 99],
-]
-
-DIVIDES_TEST_INPUTS.each do |(b, a)|
-  if divides?(b, a)
-    puts &quot;#{b} divides #{a}&quot;
-  else
-    puts &quot;#{b} does not divide #{a}&quot;
+<pre><code class="language-ruby">  [
+    [25, 0],
+    [31, 432],
+    [87, 87*58],
+    [99, 9900],
+    [9900, 99],
+  ].each do |(b, a)|
+    if divides?(b, a)
+      puts &quot;#{b} divides #{a}&quot;
+    else
+      puts &quot;#{b} does not divide #{a}&quot;
+    end
   end
-end
 </code></pre>
 <pre><code>25 divides 0
 31 does not divide 432
@@ -441,42 +439,25 @@ the division algorithm.</p>
 </blockquote>
 <p>The division algorithm itself gives the specifications to validate that
 <code>div_rem</code> is implemented correctly.  Following is a test in ruby that asserts
-the properties from the division algorithm and its terminal output.</p>
-<pre><code class="language-ruby">DIV_REM_TEST_INPUTS = [
-  [6723, 220],
-  [-2392, 183],
-  [788, -93],
-  [-5853, -11],
-  [46 * 82, 82],
-]
-
-class TestDivRem &lt; Test::Unit::TestCase
-  def test_div_rem
-    DIV_REM_TEST_INPUTS.each do |(a, b)|
+the properties from the division algorithm for some test inputs.  Note that I
+am specifically suppressing test inputs where the arguments could be zero since
+<code>div_rem(a, b)</code> is undefined when <code>b == 0</code>.</p>
+<pre><code class="language-ruby">  def test_div_rem
+    test_inputs(:include_zero =&gt; false).each do |(a, b)|
       quo, rem = div_rem(a, b)
 
       assert 0 &lt;= rem
       assert rem &lt; b.abs
       assert_equal a, b*quo + rem
-
-      puts &quot;#{a} == #{b} * #{quo} + #{rem}&quot;
     end
   end
-end
-</code></pre>
-<pre><code>6723 == 220 * 30 + 123
--2392 == 183 * -14 + 170
-788 == -93 * -8 + 44
--5853 == -11 * 533 + 10
--3772 == 82 * 46 + 0
-
-1 tests, 15 assertions, 0 failures, 0 errors
 </code></pre>
 <p>Click the expand button to see an implementation of <code>div_rem</code> in ruby.</p>
 <p><button class="fa fa-expand" onClick="showContent('div_rem')"></button></p>
 <div id="div_rem" style="display: none;">
 <pre><code class="language-ruby">def div_rem(a, b)
-  rem = (a % b) + (b &lt; 0 ? -b : 0)
+  rem = a % b
+  rem += b.abs if rem &lt; 0
   quo = (a - rem) / b
 
   [quo, rem]
@@ -535,10 +516,9 @@ must be true that \( q = n \) and \( r = 0 \).</p>
 </div>
 <h1><a class="header" href="#greatest-common-divisor" id="greatest-common-divisor">greatest common divisor</a></h1>
 <blockquote>
-<p>A <strong>common divisor</strong> of two integers \( a \) and \( b \) is an integer
-\( d \) such that \( d \mid a \) and \( d \mid b. \)  The <strong>greatest
-common divisor</strong> of \( a \) and \( b \) is their largest positive common
-divisor.</p>
+<p>A <strong>common divisor</strong> of two integers is an integer that divdes both integer.
+The <strong>greatest common divisor</strong> of two integers is their largest positive
+common divisor.</p>
 </blockquote>
 <ul>
 <li>
@@ -606,6 +586,7 @@ end
 <p>This naive gcd algorithm is slow, growing linearly in the size of the smaller
 of the two integers.  The next proposition is instrumental in developing a more
 efficient algorithm to compute the gcd.</p>
+<span id="division-algorithm-and-gcd" />
 <blockquote>
 <p><strong>proposition 4.</strong>
 If \( a = bq + r \), then \( \gcd(a, b) = \gcd(b, r) \).</p>
@@ -652,7 +633,7 @@ Write a <code>euclidean_algorithm</code> function that prints the division algor
 result from each step.</p>
 </blockquote>
 <p>Running the following code should produce the output below.</p>
-<pre><code class="language-ruby">euclidean_algorithm(239847, 95832)
+<pre><code class="language-ruby">  euclidean_algorithm(239847, 95832)
 </code></pre>
 <pre><code>239847 == 95832 * 2 + 48183
 95832 == 48183 * 1 + 47649
@@ -733,19 +714,10 @@ integer inputs and produce their greatest common divisor.  Remember that
 <p>For testing, we will verify some of the essential properties of the greatest
 common divisor as well as some specific examples.  The last property in the
 test is proved in <a href="sections/greatest_common_divisor.html#gcd-property">proposition 5</a> below.  In my ruby
-implementation tested below, <code>nil</code> is returned when the inputs are both zero.
-You may opt to do some error handling instead a null return value.</p>
-<pre><code class="language-ruby">GCD_TEST_INPUTS = [
-  [6723, 220],
-  [-2392, 183],
-  [788, -93],
-  [-5853, -11],
-  [46 * 82, 82],
-]
-
-class TestGcd &lt; Test::Unit::TestCase
-  def test_gcd
-    GCD_TEST_INPUTS.each do |(a, b)|
+implementation, <code>nil</code> is returned when the inputs are both zero.  You may opt
+to do some error handling instead a null return value.</p>
+<pre><code class="language-ruby">  def test_gcd
+    test_inputs.each do |(a, b)|
       d = gcd(a, b)
       assert d &gt; 0
       assert a % d == 0
@@ -757,22 +729,21 @@ class TestGcd &lt; Test::Unit::TestCase
   def test_gcd_explicit
     assert_nil gcd(0, 0)
 
-    assert_equal 5, gcd(5, 0)
-    assert_equal 5, gcd(-5, 0)
-    assert_equal 5, gcd(0, 5)
-    assert_equal 5, gcd(0, -5)
+    [[10, 0], [-10, 0]].each do |(a, b)|
+      assert_equal 10, gcd(a, b)
+      assert_equal 10, gcd(b, a)
+    end
 
-    assert_equal 3, gcd(6, 3)
-    assert_equal 3, gcd(-6, 3)
-    assert_equal 3, gcd(6, -3)
-    assert_equal 3, gcd(-6, -3)
+    [[6, 3], [-6, 3], [6, -3], [-6, -3]].each do |(a, b)|
+      assert_equal 3, gcd(a, b)
+      assert_equal 3, gcd(b, a)
+    end
 
-    assert_equal 14, gcd(322, 70)
-    assert_equal 14, gcd(-322, 70)
-    assert_equal 14, gcd(322, -70)
-    assert_equal 14, gcd(-322, -70)
+    [[322, 70], [-322, 70], [322, -70], [-322, -70]].each do |(a, b)|
+      assert_equal 14, gcd(a, b)
+      assert_equal 14, gcd(b, a)
+    end
   end
-end
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('gcd')"></button></p>
 <div id="gcd" style="display: none;">
@@ -819,6 +790,11 @@ Let \( k = \gcd({a \over d}, {b \over d}) \).  Then
 <p>If \( b \mid a \), prove that \( \gcd(a, b) = \vert b \vert \).</p>
 </li>
 <li>
+<p>Prove that every common divisor of two integers divides their greatest
+common divisor.  (Hint: look over the proof of
+<a href="sections/greatest_common_divisor.html#division-algorithm-and-gcd">proposition 4</a>.)</p>
+</li>
+<li>
 <p>Benchmark <code>gcd</code> vs <code>naive_gcd</code> to convince yourself of the stated time
 complexity.</p>
 </li>
@@ -845,7 +821,396 @@ the smaller of the two integers.  If \( b \) divides \( a \), then
 know that \( \vert b \vert \) divides \( a \), which proves that
 \( \gcd(a, b) = \vert b \vert \).</p>
 </li>
+<li>
+<p>In the course of proving <a href="sections/greatest_common_divisor.html#division-algorithm-and-gcd">proposition 4</a>, we
+noted that the set of common divisors of \( a, b \) is equal to the set of
+common divisors of \( b, r \) if \( a = qb + r \).  Repeating the
+division algorithm as we do in the Euclidean algorithm, we eventually find
+that the common divisors of two integers is equal to the set of divisors of
+their gcd and zero.  This proves that each common divisor divides the
+greatest common divisor.</p>
+</li>
 </ol>
+</div>
+<h1><a class="header" href="#bezouts-identity" id="bezouts-identity">bezout's identity</a></h1>
+<blockquote>
+<p><strong>proposition 6 (Bezout's identity).</strong>
+The greatest common divisor can always be expressed as a linear combination
+of the two integers.  In other words, given two integers \( a \) and
+\( b \), there exist integers \( x \) and \( y \) such that
+\( ax + by = \gcd(a, b) \).</p>
+</blockquote>
+<p>The proof of this is constructive and most easily understood through a few
+examples.</p>
+<h2><a class="header" href="#example-1" id="example-1">example 1</a></h2>
+<p>For example, if \( a = 322 \) and \( b = 70 \), Bezout's identity implies
+that \( 322x + 70y = 14 \) for some integers \( x \) and \( y \).  Such
+integers might be found by brute force.  In this case, a brute force search
+might arrive at the solution \( (x, y) = (-2, 9) \).  However, the Euclidean
+algorithm provides an efficient way to find a solution.</p>
+<p>The first division yields \( 322 = 70(4) + 42 \) with a quotient of
+\( q_0 = 4 \) and a remainder of \( r_0 = 42 \).  Solving for \( r_0 \)
+gives \( 42 = 322 - 70(4) \).  In particular, we have shown that the
+remainder \( r_0 \) can be expressed as a linear combination of \( 322 \)
+and \( 70 \), namely \( r_0 = 322(1) + 70(-4) \).</p>
+<p>The second division yields \( 70 = 42(1) + 28 \) with a quotient of
+\( q_1 = 1 \) and a remainder of \( r_1 = 28 \).  Solving for
+\( r_1 \) gives \( 28 = 70 - 42(1) \).  The linear combination for
+\( r_0 = 42 \) may be substituted here and simplified to
+\( 28 = -322 + 70(5) \). Therefore, the remainder
+\( r_1 = 322(-1) + 70(5) \) is also a linear combination of the original two
+integers.</p>
+<p>The third division gives \( 42 = 28(1) + 14 \) with a quotient of
+\( q_2 = 1 \) and a remainder of \( r_2 = 28 \).  The linear combinations
+for \( r_0 = 42 \) and \( r_1 = 28 \) may be substituted into this
+expression.  Then solving for the new remainder, it will simplify to
+\( 14 = 322(2) + 70(-9) \), which is the solution to Bezout's identity
+that was listed above.</p>
+<p>These computations are summarized in the table below. In each of the first
+three rows, the last column is how to express each remainder \( r \) as a
+linear combination of the original \( a = 322 \) and \( b = 70 \), namely,
+\( r = 322x + 70y \).  The last row verifies that the algorithm has
+terminated, ie, that the gcd of \( 322 \) and \( 70 \) is the
+second-to-last remainder \( 14 \).</p>
+<table><thead><tr><th align="right">\( a' \)</th><th align="right">\( b' \)</th><th align="right">\( r \)</th><th align="right">\( q \)</th><th align="left">\( (x, y) \)</th></tr></thead><tbody>
+<tr><td align="right">\( 322 \)</td><td align="right">\( 70 \)</td><td align="right">\( 42 \)</td><td align="right">\( 4 \)</td><td align="left">\( (1, -4) \)</td></tr>
+<tr><td align="right">\( 70 \)</td><td align="right">\( 42 \)</td><td align="right">\( 28 \)</td><td align="right">\( 1 \)</td><td align="left">\( (-1, 5) \)</td></tr>
+<tr><td align="right">\( 42 \)</td><td align="right">\( 28 \)</td><td align="right">\( 14 \)</td><td align="right">\( 1 \)</td><td align="left">\( (2, -9) \)</td></tr>
+<tr><td align="right">\( 28 \)</td><td align="right">\( 14 \)</td><td align="right">\( 0 \)</td><td align="right">\( 2 \)</td><td align="left"></td></tr>
+</tbody></table>
+<p>We would like a programatic way to compute the \( (x, y) \) pairs as we go.
+Suppose that on some row we have \( a' = b'q + r \) and that we have already
+calculated that \( a' = 322 x_0 + 70 y_0 \) and
+\( b' = 322 x_1 + 70 y_1 \).  We can substitute these expressions into the
+division algorithm equation to get
+\[ 322 x_0 + 70 y_0 = (322 x_1 + 70 y_1)q + r. \]
+Solving for \( r \) and rearranging, we get
+\[ r = 322 (x_0 - x_1 q) + 70(y_0 - y_1 q). \]</p>
+<p>This is great news, because we can compute the the next \( (x, y) \)
+pair from the previous two pairs.  The recursive relation for both \( x \)
+and \( y \) can be expressed as
+\[ u_2 = u_0 - u_1 \cdot q. \]
+In other words, the <code>next_value = previous_value - current_value * quotient</code>.</p>
+<p>To see this in action, we observe first that \( a = a(1) + b(0) \) and
+\( b = a(0) + b(1) \), so the initial values for the \( (x, y) \) pairs
+are \( (1, 0) \) and \( (0, 1) \).</p>
+<p>The first quotient is \( q = 4 \), so the first \( (x, y) \) pair is
+\[ (1, 0) - (0, 1) \cdot 4 = (1 - 0, 0 - 4) = (1, -4). \]
+(Note that we used vector addition and scalar multiplication to express this
+succinctly.)  The second quotient is \( q = 1 \), so the second pair is
+\[ (0, 1) - (1, -4) \cdot 1 = (0 - 1, 1 + 4) = (-1, 5). \]
+The third quotient is \( q = 1 \), so the third pair is
+\[ (1, -4) - (-1, 5) \cdot 1 = (1 + 1, -4 - 5) = (2, -9). \]
+Since the following remainder is \( 0 \), the algorithm terminates.</p>
+<h2><a class="header" href="#example-2" id="example-2">example 2</a></h2>
+<p>Here is another example to illustrate this process.  Suppose we want to
+find a solution to \( 5831 x + 482 y = \gcd(5831, 482) \).  We seed our table
+with the initial \( (x, y) \) pairs and with \( a \) and \( b \) as the
+first &quot;remainders&quot;.</p>
+<table><thead><tr><th align="right">\( a' \)</th><th align="right">\( b' \)</th><th align="right">\( r \)</th><th align="right">\( q \)</th><th align="left">\( (x, y) \)</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 5831 \)</td><td align="right"></td><td align="left">\( (1, 0) \)</td></tr>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 482 \)</td><td align="right"></td><td align="left">\( (0, 1) \)</td></tr>
+</tbody></table>
+<p>The division of \( 5381 \) by \( 482 \) yields \( 5831 = 482(12) + 47 \).
+Since the quotient is \( q = 12 \), we calculate the next \( (x, y) \) pair
+to be
+\[ (1, 0) - (0, 1) \cdot 12 = (1 - 0, 0 - 12) = (1, -12) \]
+and we fill in the new row on the table.</p>
+<table><thead><tr><th align="right">\( a' \)</th><th align="right">\( b' \)</th><th align="right">\( r \)</th><th align="right">\( q \)</th><th align="left">\( (x, y) \)</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 5831 \)</td><td align="right"></td><td align="left">\( (1, 0) \)</td></tr>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 482 \)</td><td align="right"></td><td align="left">\( (0, 1) \)</td></tr>
+<tr><td align="right">\( 5831 \)</td><td align="right">\( 482 \)</td><td align="right">\(47 \)</td><td align="right">\( 12 \)</td><td align="left">\( (1, -12) \)</td></tr>
+</tbody></table>
+<p>The division of \( 482 \) by \( 47 \) yields \( 482 = 47(10) + 12 \).
+Since the quotient is \( q = 10 \), we calculate the next \( (x, y) \) pair
+to be
+\[ (0, 1) - (1, -12) \cdot 10 = (0 - 10, 1 + 120) = (-10, 121) \]
+and we fill in the new row on the table.</p>
+<table><thead><tr><th align="right">\( a' \)</th><th align="right">\( b' \)</th><th align="right">\( r \)</th><th align="right">\( q \)</th><th align="left">\( (x, y) \)</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 5831 \)</td><td align="right"></td><td align="left">\( (1, 0) \)</td></tr>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 482 \)</td><td align="right"></td><td align="left">\( (0, 1) \)</td></tr>
+<tr><td align="right">\( 5831 \)</td><td align="right">\( 482 \)</td><td align="right">\(47 \)</td><td align="right">\( 12 \)</td><td align="left">\( (1, -12) \)</td></tr>
+<tr><td align="right">\( 482 \)</td><td align="right">\( 47 \)</td><td align="right">\(12 \)</td><td align="right">\( 10 \)</td><td align="left">\( (-10, 121) \)</td></tr>
+</tbody></table>
+<p>The division of \( 47 \) by \( 12 \) yields \( 47 = 12(3) + 11 \).  With
+a quotient of \( q = 3 \), the next \( (x, y) \) pair is
+\[ (1, -12) - (-10, 121) \cdot 3 = (1 + 30, -12 - 363) = (31, -375) \]
+and we fill in the new row on the table.</p>
+<table><thead><tr><th align="right">\( a' \)</th><th align="right">\( b' \)</th><th align="right">\( r \)</th><th align="right">\( q \)</th><th align="left">\( (x, y) \)</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 5831 \)</td><td align="right"></td><td align="left">\( (1, 0) \)</td></tr>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 482 \)</td><td align="right"></td><td align="left">\( (0, 1) \)</td></tr>
+<tr><td align="right">\( 5831 \)</td><td align="right">\( 482 \)</td><td align="right">\(47 \)</td><td align="right">\( 12 \)</td><td align="left">\( (1, -12) \)</td></tr>
+<tr><td align="right">\( 482 \)</td><td align="right">\( 47 \)</td><td align="right">\(12 \)</td><td align="right">\( 10 \)</td><td align="left">\( (-10, 121) \)</td></tr>
+<tr><td align="right">\( 47 \)</td><td align="right">\( 12 \)</td><td align="right">\(11 \)</td><td align="right">\( 3 \)</td><td align="left">\( (31, -375) \)</td></tr>
+</tbody></table>
+<p>The division of \( 12 \) by \( 11 \) yields \( 12 = 11(1) + 1 \).  With a
+quotient of \( q = 1 \), the next pair is
+\[ (-10, 121) - (31, -375) \cdot 1 = (-10 - 31, 121 + 375) = (-41, 496) \]
+and we fill in the new row.</p>
+<table><thead><tr><th align="right">\( a' \)</th><th align="right">\( b' \)</th><th align="right">\( r \)</th><th align="right">\( q \)</th><th align="left">\( (x, y) \)</th></tr></thead><tbody>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 5831 \)</td><td align="right"></td><td align="left">\( (1, 0) \)</td></tr>
+<tr><td align="right"></td><td align="right"></td><td align="right">\( 482 \)</td><td align="right"></td><td align="left">\( (0, 1) \)</td></tr>
+<tr><td align="right">\( 5831 \)</td><td align="right">\( 482 \)</td><td align="right">\(47 \)</td><td align="right">\( 12 \)</td><td align="left">\( (1, -12) \)</td></tr>
+<tr><td align="right">\( 482 \)</td><td align="right">\( 47 \)</td><td align="right">\(12 \)</td><td align="right">\( 10 \)</td><td align="left">\( (-10, 121) \)</td></tr>
+<tr><td align="right">\( 47 \)</td><td align="right">\( 12 \)</td><td align="right">\(11 \)</td><td align="right">\( 3 \)</td><td align="left">\( (31, -375) \)</td></tr>
+<tr><td align="right">\( 12 \)</td><td align="right">\( 11 \)</td><td align="right">\(1 \)</td><td align="right">\( 1 \)</td><td align="left">\( (-41, 496) \)</td></tr>
+</tbody></table>
+<p>The final division of \( 11 \) by \( 1 \) yields \( 11 = 1(11) + 0 \).
+With a remainder of \( 0 \), the algorithm has terminated.  The greatest
+common divisor is \( \gcd(5831, 482) = 1 \) and \( (-41, 496) \) is a
+solution to \( 5831 x + 482 y = 1 \).</p>
+<h2><a class="header" href="#in-code-2" id="in-code-2">in code</a></h2>
+<p>The examples above can be generalized into a constructive proof of Bezout's
+identity -- the proof is an algorithm to produce a solution.</p>
+<span id="bezout-algorithm" />
+<blockquote>
+<p><strong>Bezout algorithm for positive integers.</strong>
+Given <em>positive</em> integers <code>a</code> and <code>b</code>, we want to find integers <code>x</code> and <code>y</code>
+such that <code>a * x + b * y == gcd(a, b)</code>.  Initially set <code>prev = [1, 0]</code> and
+<code>curr = [0, 1]</code>.</p>
+<ol>
+<li>If <code>b == 0</code>, return <code>prev</code>.</li>
+<li>Calculate <code>q, r = div_rem(a, b)</code>.</li>
+<li>Calculate <code>x = prev[0] - curr[0] * q</code> and <code>y = prev[1] - curr[1] * q</code>.</li>
+<li>Replace <code>a, b</code> with <code>b, r</code>.</li>
+<li>Replace <code>prev, curr</code> with <code>curr, [x, y]</code>.</li>
+<li>Return to Step 1.</li>
+</ol>
+</blockquote>
+<p>The algorithm needs to be adjusted slightly for zero or negative values.  Run
+the algorithm described for various combinations of positive, negative, and
+zero values, checking whether each resulting pair <code>x, y</code> actually satisfies
+<code>a * x + b * y == gcd(a, b)</code>.</p>
+<p>While exploring zero/negative values, there are 3 cases to consider:</p>
+<ol>
+<li>when the algorithm returns immediately, ie, when the original <code>b</code> is zero.</li>
+<li>when the algorithm returns after one iteration, ie, when the first remainder
+<code>r</code> is zero.</li>
+<li>when the algorithm returns after two or more iterations.</li>
+</ol>
+<p>We seeded the algorithm initially with <code>prev = [1, 0]</code> and <code>curr = [0, 1]</code>.
+We did this in order to express <code>a</code> and <code>b</code> in terms of themselves, ie,
+<code>a == 1 * a + 0 * b</code> and <code>b == 0 * a + 1 * b</code>.  With two or more iterations,
+the division algorithm guarantees that the remainder is positive, so the
+calculated pair at that point gives a positive number <code>a * x + b * y</code>.
+However, if the algorithm terminates during the first or second iteration, we
+would return either <code>[1, 0]</code> or <code>[0, 1]</code>, in which case we may end up with
+<code>a * x + b * y</code> as a negative value, which would be incorrect since the
+greatest common divisor is always positive.</p>
+<p>To account for this, we may need to negate the values of <code>prev</code> in Step 1
+before returning.  Consider these two examples.</p>
+<ol>
+<li>
+<p>Let <code>a = -10</code> and <code>b = 0</code>.  Since <code>b == 0</code>, we return the original
+<code>prev = [1, 0]</code> immediately.  Notice that <code>1 * -10 + 0 * 0 == -10</code> while
+<code>gcd(-10, 0) == 10</code>.  In this case, we need to return the original <code>prev</code>
+but with negated values, ie, <code>[-1, 0]</code>.</p>
+</li>
+<li>
+<p>Let <code>a = 10</code> and <code>b = -5</code>.  Since <code>b != 0</code>, we calculate <code>q = -2</code> and
+<code>r = 0</code>.  When we return to Step 1, we have <code>new_b = r == 0</code>, so we return
+<code>new_prev = curr == [0, 1]</code>.  Notice that <code>0 * 10 + 1 * -5 = -5</code> while
+<code>gcd(10, -5) == 5</code>.  In this case, we need to return the <code>new_prev</code> but with
+negated values, ie, <code>[0, -1]</code>.</p>
+</li>
+</ol>
+<p>The conclusion is that Step 1 requires the following adjustment:</p>
+<blockquote>
+<ol>
+<li>If <code>b == 0</code>, return <code>prev</code> if <code>a &gt; 0</code>, otherwise return <code>prev</code> with
+negated values.</li>
+</ol>
+</blockquote>
+<span id="bezout-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write a <code>bezout</code> function that takes integer inputs <code>(a, b)</code> and
+produces integers <code>(x, y)</code> such that <code>a * x + b * y = gcd(a, b)</code>.</p>
+</blockquote>
+<p>Testing this function is very simple: regardless of the inputs, Bezout's
+identity must be satisfied.  Make sure you include test inputs for the special
+cases discussed above.</p>
+<pre><code class="language-ruby">  def test_bezout
+    test_inputs.each do |(a, b)|
+      x, y = bezout(a, b)
+      assert_equal gcd(a, b), a * x + b * y
+    end
+  end
+
+  def test_bezout_explicit
+    assert_nil bezout(0, 0)
+  end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('bezout')"></button></p>
+<div id="bezout" style="display: none;">
+<pre><code class="language-ruby">def bezout(a, b)
+  return if a == 0 &amp;&amp; b == 0
+
+  prev, curr = [[1, 0], [0, 1]]
+
+  while b != 0
+    quo, rem = div_rem(a, b)
+    nxt = [0, 1].map { |i| prev[i] - curr[i] * quo }
+
+    a, b = b, rem
+    prev, curr = curr, nxt
+  end
+
+  a &lt; 0 ? prev.map { |u| -u } : prev
+end
+</code></pre>
+</div>
+<h1><a class="header" href="#least-common-multiple" id="least-common-multiple">least common multiple</a></h1>
+<span id="least-common-multiple" />
+<blockquote>
+<p>A <strong>common multiple</strong> of two integers is an integer divisible by both
+integers.  The <strong>least common multiple</strong> of two integers is the smallest
+positive common multiple.</p>
+</blockquote>
+<ul>
+<li>
+<p>The notation for the least common multiple of \( a \) and \( b \) is
+\( \operatorname{lcm}(a, b) \).</p>
+</li>
+<li>
+<p>By definition, the least common multiple of two integers is independent of
+the sign of the two integers --- the \( \operatorname{lcm} \) is the same
+if you replace \( a \) with \( -a \) or \( b \) with \( -b \).</p>
+</li>
+<li>
+<p>The definition of \( \operatorname{lcm} \) does not make sense if either
+\( a \) or \( b \) are is equal to \( 0 \).</p>
+</li>
+<li>
+<p>For the remainder of the section, we will assume integers to be nonzero.</p>
+</li>
+</ul>
+<p>The existence of a least common multiple stems from the fact that the absolute
+value of the product \( |ab| \) is a positive common multiple of \( a \)
+and \( b \).</p>
+<h2><a class="header" href="#naive-computation-1" id="naive-computation-1">naive computation</a></h2>
+<p>The least common multiple can be computed naively by checking every
+multiple of one of them up to their product to see if it is divisible
+by the other.  For example, to compute \( \operatorname{lcm}(154, 56) \)</p>
+<ul>
+<li>
+<p>start with \( 154 \) and keep adding \( 154 \) until it is divisible by
+\( 56 \)</p>
+</li>
+<li>
+<p>\( 56 \) does not divide \( 154 \), \( 154(2) \), or \(154(3) \)</p>
+</li>
+<li>
+<p>however, \( 154(4) = 616 = 56(11) \) is divisible by \( 56 \)</p>
+</li>
+<li>
+<p>the least common multiple is \( \operatorname{lcm}(154, 56) = 616 \)</p>
+</li>
+</ul>
+<span id="naive-lcm-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write a <code>naive_lcm</code> function that returns the least common multiple of two
+nonzero integer inputs.  It should only rely on divisibility checks.</p>
+</blockquote>
+<p><button class="fa fa-expand" onClick="showContent('naive_lcm')"></button></p>
+<div id="naive_lcm" style="display: none;">
+<pre><code class="language-ruby">def naive_lcm(a, b)
+  return if a == 0 || b == 0
+
+  smaller, larger = [a, b].map(&amp;:abs).sort
+
+  multiple = larger
+  while multiple % smaller != 0
+    multiple += larger
+  end
+
+  multiple
+end
+</code></pre>
+</div>
+<p>The time complexity of this algorithm, similar to the naive gcd algorithm,
+grows linearly in the smaller of the two arguments.</p>
+<h2><a class="header" href="#a-property-of-the-lcm" id="a-property-of-the-lcm">a property of the lcm</a></h2>
+<span id="lcm-divides-common-multiples" />
+<blockquote>
+<p><strong>proposition 7.</strong>
+Every common multiple of two integers is a multiple of their least common
+multiple.</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Let \( k \) be a common multiple of \( a \) and \( b \) and let \( m \)
+be their least common multiple.  Dividing \( k \) by \( m \) yields
+\( k = mq + r \), where \( 0 \le r &lt; m \).  Since \( r = k - mq \) is a
+linear combination of \( k \) and \( m \), then \( r \) must be
+divisible by both \( a \) and \( b \), ie, \( r \) must be a common
+multiple of \( a \) and \( b \).  If \( r \) were nonzero, then it
+would be a smaller positive common multiple than the least common multiple, a
+contradiction.  Therefore, \( r = 0 \) and \( m \mid k \).</p>
+</blockquote>
+<h2><a class="header" href="#relation-to-greatest-common-divisor" id="relation-to-greatest-common-divisor">relation to greatest common divisor</a></h2>
+<p>In order to compute the least common multiple efficiently, we need to prove an
+identity involving the greatest common divisor.</p>
+<span id="least-common-multiple" />
+<blockquote>
+<p><strong>proposition 8.</strong>
+If \( a \) and \( b \) are nonzero integers, then
+\( \gcd(a, b) \cdot \operatorname{lcm}(a, b) = \vert ab \vert \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+For simplicity, we may assume that \( a \) and \( b \) are positive,
+since both the gcd and the lcm are independent of sign.  Define
+\( d = \gcd(a, b) \) and \( m = \operatorname{lcm}(a, b) \). The goal
+is to prove that \( md = ab \).</p>
+<p>Since \( d \) is a common divisor of \( a, b\), the integer \( ab/d \)
+can be expressed as \( (a/d) \cdot b \) or as \( a \cdot (b/d) \).  This
+implies that \( ab/d \) must be a common multiple of \( a \) and
+\( b \).  By <a href="sections/least_common_multiple.html#lcm-divides-common-multiples">proposition 7</a>,
+\( ab/d \) must be a multiple of \( m \), hence
+\[ ab/d = mk \quad\implies\quad ab = mdk \quad\implies\quad md \mid ab. \]</p>
+<p>Next, using Bezout's identity, there exist integers \( x, y \) such that
+\( d = ax + by \).  Multiplying both sides by \( m \) yields
+\[ md = amx + bmy. \]
+Since \( b \mid m \), it follows that \( ab \mid am \), so it divides the
+first term.  Since \( a \mid m \), it follows that \( ab \mid bm \), so
+it also divides the second term.  Therefore, \( ab \) divides the whole
+expression, which implies that \( ab \mid md \).</p>
+<p>Since each of \( md \) and \( ab \) is positive and divides the other,
+they must be equal.</p>
+</blockquote>
+<h2><a class="header" href="#in-code-3" id="in-code-3">in code</a></h2>
+<span id="lcm-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write an <code>lcm</code> function that returns the least common multiple of two
+nonzero integer inputs.  It should use the <code>gcd</code> function and
+<a href="sections/least_common_multiple.html#least-common-multiple">proposition 8</a>.</p>
+</blockquote>
+<p>For testing, we can compare the result to the <code>naive_lcm</code> result.  Be careful
+to limit this type of test to just a few <em>positive</em> values since the naive
+function is slow and restricted.  For more general test cases, we'll use the
+proposition, even though we also rely on the proposition for the
+implementation.</p>
+<pre><code class="language-ruby">  def test_lcm
+    limited_test_inputs.each do |(a, b)|
+      assert_equal naive_lcm(a, b), lcm(a, b)
+    end
+
+    test_inputs(:include_zero =&gt; false).each do |(a, b)|
+      assert_equal (a * b).abs, gcd(a, b) * lcm(a, b)
+    end
+  end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('lcm')"></button></p>
+<div id="lcm" style="display: none;">
+<pre><code class="language-ruby">def lcm(a, b)
+  return if a == 0 || b == 0
+
+  ((a / gcd(a, b)) * b).abs
+end
+</code></pre>
 </div>
 
                     </main>
