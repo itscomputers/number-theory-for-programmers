@@ -94,7 +94,9 @@ where \\( k \\) can be any integer.  For instance, the solutions closest
 to the origin occur when \\( k = -3, -4 \\), ie, at
 \\[ (3, -12) \quad \text{ and } \quad (-2, 11). \\]
 
-<canvas id="linear-graph"></canvas>
+<div class="chart-container" style="position: relative;">
+  <canvas id="linear-graph"></canvas>
+</div>
 
 <script>
   const gridColor = "#444";
