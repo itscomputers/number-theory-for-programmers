@@ -86,7 +86,7 @@ process in both directions indefinitely.
 
 Continuing the example from above of \\( 322 x + 70 y = 126 \\), the
 corresponding line in slope-intercept form is
-\\[ y = -\tfrac{322}{70} x + 126 = -\tfrac{23}{5} x + 126. \\]
+\\[ y = -\tfrac{322}{70} x + \tfrac{126}{70} = -\tfrac{23}{5} x + \tfrac{9}{5}. \\]
 We already found a base solution of \\( (18, -81) \\).  So, according to this
 proposition, every solution is of the form
 \\[ x = 18 + 5k, \quad y = -81 - 23k \\]
@@ -94,20 +94,37 @@ where \\( k \\) can be any integer.  For instance, the solutions closest
 to the origin occur when \\( k = -3, -4 \\), ie, at
 \\[ (3, -12) \quad \text{ and } \quad (-2, 11). \\]
 
-<div id="linear-graph">
-</div>
+<canvas id="linear-graph"></canvas>
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-  GRAPH = document.getElementById("linear-graph");
-  Plotly.newPlot(
-    GRAPH,
-    [{
-      x: [-7, -2, 3, 8, 13, 18, 23],
-      y: [34, 11, -12, -35, -58, -81, -104],
-    }],
-    { margin: { t: 0 } },
-  );
+  const gridColor = "#444";
+  const pointColor = "#aa5325";
+  const label = "integer points";
+  const labels = [-7, -2, 3, 8, 13, 18, 23];
+  const data = labels.map(x => (-23 * x + 9) / 5);
+  const yTicks = { beginAtZero: false, stepSize: 20, suggestedMin: -110, suggestedMax: 30 };
+  const xTicks = { stepSize: 5 };
+  const gridLines = { color: gridColor, zeroLineColor: gridColor };
+  const datasetOptions = {
+    borderColor: "#007999",
+    pointBackgroundColor: pointColor,
+    pointBorderColor: pointColor,
+    fill: false
+  };
+  let ctx = document.getElementById("linear-graph");
+  let linearGraph = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{ label, data, ...datasetOptions }],
+    },
+    options: {
+      scales: {
+        yAxes: [{ gridLines, ticks: yTicks }],
+        xAxes: [{ gridLines, ticks: xTicks }],
+      }
+    },
+  });
 </script>
 
 > *proof of proposition 12:*
@@ -182,14 +199,14 @@ I have two tests: one for when there are
 solutions, and one for when there are no solutions.
 
 ```ruby
-{{#include ../ruby/linear_equation_solver.rb:38:63}}
+{{#include ../ruby/linear_equation_solver.rb:40:65}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('linear-equation-solver')"></button>
 <div id="linear-equation-solver" style="display: none;">
 
 ```ruby
-{{#include ../ruby/linear_equation_solver.rb:7:35}}
+{{#include ../ruby/linear_equation_solver.rb:7:37}}
 ```
 
 </div>

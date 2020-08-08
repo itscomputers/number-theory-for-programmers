@@ -2,7 +2,7 @@ require 'test/unit'
 require_relative 'division'
 
 #-----------------------------
-# linear equation solver: lines 38-63, 7-35
+# linear equation solver: lines 40-65, 7-37
 
 class LinearEquationSolver
   # class to find integer solutions [x, y] to a*x + b*y == c
