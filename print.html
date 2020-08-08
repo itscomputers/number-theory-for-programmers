@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li><li class="chapter-item expanded "><a href="sections/linear_equations.html"><strong aria-hidden="true">6.</strong> linear equations</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -94,7 +94,8 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -1060,6 +1061,41 @@ cases discussed above.</p>
 end
 </code></pre>
 </div>
+<h2><a class="header" href="#applications-of-bezouts-identity" id="applications-of-bezouts-identity">applications of bezout's identity</a></h2>
+<p>Bezout's identity is a powerful tool since it gives a relationship between
+integers to their greatest common divisor.  Some proofs can be vastly
+simplified by leveraging this new capability.  Here are a few propositions
+that can be proved using Bezout's identity.</p>
+<blockquote>
+<p><strong>proposition 9.</strong>
+The greatest common divisor of two integers is divisible by any common
+divisor.</p>
+</blockquote>
+<blockquote>
+<p><em>proof</em>:
+Let \( k \) be a common divisor of \( a, b \) and let \( d \) be their
+greatest common divisor.  Bezout's lemma allows us to write \( ax + by = d \)
+for some integers \( x, y \).  Since \( k \) divides both \( a \) and
+\( b \), it divides the linear combination \( ax + by \), which is equal
+to \( d \).</p>
+</blockquote>
+<span id="divides-product-but-prime-to-first" />
+<blockquote>
+<p><strong>proposition 10.</strong>
+If an integer \( c \) divides a product \( ab \) and
+\( \gcd(a, c) = 1 \), then \( c \) divides \( b \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Since \( \gcd(a, c) = 1 \), then we can write \( ax + cy = 1 \) for some
+integers \( x, y \).  Multiplying both sides by \( b \), we get
+\[ abx + bcy = b. \]
+The first term is divisible by \( c \), since \( c \) is assumed to
+divide the product \( ab \).  The second term is divisible by \( c \)
+since \( c \) occurs in that term.  Therefore, their sum is divisible by
+\( c \), which proves that \( b \) is divisible by
+\( c \).</p>
+</blockquote>
 <h1><a class="header" href="#least-common-multiple" id="least-common-multiple">least common multiple</a></h1>
 <span id="least-common-multiple" />
 <blockquote>
@@ -1209,6 +1245,258 @@ implementation.</p>
   return if a == 0 || b == 0
 
   ((a / gcd(a, b)) * b).abs
+end
+</code></pre>
+</div>
+<h1><a class="header" href="#linear-equations" id="linear-equations">linear equations</a></h1>
+<p>In this section, we discuss finding integer solutions to integer linear
+equations.  An integer linear equation in two variables \( x, y \) is of the
+form
+\[ ax + by = c \]
+where \( a, b, c \) are given integers.  We are interested in finding, if possible,
+integers \( x, y \) that satisfy the equation.</p>
+<p>The linear equation \( ax + by = c \) defines a line in the plane.  As such,
+there are infinitely many <em>real</em> solutions, for example
+\( (x, y) = (\frac{c}{a}, 0) \).  It is not readily apparent under what
+conditions there exist points on the line with integer coordinates.</p>
+<h2><a class="header" href="#existence-of-a-solution" id="existence-of-a-solution">existence of a solution</a></h2>
+<span id="linear-equation-solution-existence" />
+<blockquote>
+<p><strong>proposition 11.</strong>
+Given integers \( a, b, c \), there exist integers \( x, y \) such that
+\( ax + by = c \) if and only if \( c \) is divisible by
+\( \gcd(a, b) \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+Suppose that \( ax + by = c \) for some integers \( x, y \).  Since
+\( c \) is a linear combination of \( a \) and \( b \), then
+<a href="sections/divisibility.html#linear-combination">proposition 1</a> implies that
+\( c \) is divisible by any common divisor of \( a, b \).  In particular,
+\( c \) is divisible by their greatest common divisor.</p>
+<p>On the other hand, suppose that \( c \) is divisible by
+\( d = \gcd(a, b) \).  Then \( c = k d \) for some integer
+\( k \).  By <a href="sections/bezouts_identity.html">Bezout's identity</a>, there exist
+integers \( u, v \) such that \( au + bv = d \).  Multiplying
+both sides by \( k \), we have
+\[ a(ku) + b(kv) = k d = c, \]
+hence \( (x, y) = (ku, kv) \) is an integer solution to
+\( ax + by = c \).</p>
+</blockquote>
+<p>This is a constructive proof: if a solution exists, it gives a mechanism to
+find a solution.</p>
+<h3><a class="header" href="#example" id="example">example</a></h3>
+<p>Suppose we want to solve \( 322 x + 70 y = 126 \).</p>
+<ol>
+<li>
+<p>Compute <code>gcd(322, 70) ~&gt; 14</code>.</p>
+</li>
+<li>
+<p>Compute <code>div_rem(126, 14) ~&gt; [9, 0]</code> and conclude that a solution exists
+since \( 126 = 14 \cdot 9 \).</p>
+</li>
+<li>
+<p>Compute <code>bezout(322, 70) ~&gt; [2, -9]</code> to get the equation
+\( 322(2) + 70(-9) = 14 \).</p>
+</li>
+<li>
+<p>Scale this equation by a factor of \( 9 \) to get
+\( 322(18) + 70(-81) = 126 \).</p>
+</li>
+</ol>
+<p>Therefore, one solution is \( (x, y) = (18, -81) \).</p>
+<h2><a class="header" href="#parametrization-of-solutions" id="parametrization-of-solutions">parametrization of solutions</a></h2>
+<span id="linear-equation-solutions-parametrization">
+<blockquote>
+<p><strong>proposition 12.</strong>
+Given integers \( a, b, c \), if there exists an integer solution to the
+linear equation \( ax + by = c \), then there exist infinitely many
+solutions.  Moreover, the set of all solutions may be obtained from a single
+solution \( (x_0, y_0) \) by taking all pairs of the form
+\[ x = x_0 + \tfrac{b}{d} k, \quad y = y_0 - \tfrac{a}{d} k \]
+where \( k \) is any integer and \( d = \gcd(a, b) \).</p>
+</blockquote>
+<p>Before giving a formal proof, let's talk about the intuition behind these
+additional solutions.  As mentioned above, the equation \( ax + by = c \)
+identifies a line in the plane.  Solving for \( y \), we get
+\[ y = -\tfrac{a}{b}x + c, \]
+so the slope of this line is the rational number \( \tfrac{-a}{b} \).  If
+\( d = \gcd(a, b) \), then the reduced form of the slope is
+\( \tfrac{ -a/d }{ b/d } \).  If there is an integer point
+\( (x_0, y_0) \) on the line, then we can use this slope to find the &quot;next&quot;
+integer point.  Since the slope is the change in \( y \) divided by the
+change in \( x \), that means we can add \( \tfrac{b}{d} \) to the
+\( x \)-value and subtract \( \tfrac{a}{d} \) from the \( y \)-value to
+get the &quot;next&quot; integer point.  To get <em>all</em> integer points, we apply this same
+process in both directions indefinitely.</p>
+<h3><a class="header" href="#example-1" id="example-1">example</a></h3>
+<p>Continuing the example from above of \( 322 x + 70 y = 126 \), the
+corresponding line in slope-intercept form is
+\[ y = -\tfrac{322}{70} x + \tfrac{126}{70} = -\tfrac{23}{5} x + \tfrac{9}{5}. \]
+We already found a base solution of \( (18, -81) \).  So, according to this
+proposition, every solution is of the form
+\[ x = 18 + 5k, \quad y = -81 - 23k \]
+where \( k \) can be any integer.  For instance, the solutions closest
+to the origin occur when \( k = -3, -4 \), ie, at
+\[ (3, -12) \quad \text{ and } \quad (-2, 11). \]</p>
+<div class="chart-container" style="position: relative;">
+  <canvas id="linear-graph"></canvas>
+</div>
+<script>
+  const gridColor = "#444";
+  const pointColor = "#aa5325";
+  const label = "integer points";
+  const labels = [-7, -2, 3, 8, 13, 18, 23];
+  const data = labels.map(x => (-23 * x + 9) / 5);
+  const yTicks = { beginAtZero: false, stepSize: 20, suggestedMin: -110, suggestedMax: 30 };
+  const xTicks = { stepSize: 5 };
+  const gridLines = { color: gridColor, zeroLineColor: gridColor };
+  const datasetOptions = {
+    borderColor: "#007999",
+    pointBackgroundColor: pointColor,
+    pointBorderColor: pointColor,
+    fill: false
+  };
+  let ctx = document.getElementById("linear-graph");
+  let linearGraph = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{ label, data, ...datasetOptions }],
+    },
+    options: {
+      scales: {
+        yAxes: [{ gridLines, ticks: yTicks }],
+        xAxes: [{ gridLines, ticks: xTicks }],
+      }
+    },
+  });
+</script>
+<blockquote>
+<p><em>proof of proposition 12:</em>
+Supposing we have two solutions to \( ax + by = c \), say \( (x_0, y_0) \)
+and \( (x_1, y_1) \), then
+\[ a x_1 + b y_1 = c = a x_0 + b y_0. \]
+Moving the \( x \)'s and \( y \)'s to opposite sides, we get
+\[ a (x_1 - x_0) = b (y_0 - y_1). \]
+Both sides are divisible by \( d = \gcd(a, b) \), therefore
+\[ \tfrac{a}{d} (x_1 - x_0) = \tfrac{b}{d} (y_0 - y_1) \]
+is an integer equation.  This means that the integer \( \tfrac{b}{d} \)
+must divide the product \( \tfrac{a}{d} (x_1 - x_0) \).  By
+<a href="sections/greatest_common_divisor.html#gcd-property">proposition 5</a>,
+we know that \( \gcd(\tfrac{a}{d}, \tfrac{b}{d}) = 1 \).  Therefore,
+<a href="sections/bezouts_identity.html#divides-product-but-prime-to-first">proposition 10</a>
+guarantees that the integer \( \tfrac{b}{d} \) must divide \( x_1 - x_0 \).  In
+other words, there is an integer \( k \) such that
+\[
+x_1 - x_0 = \tfrac{b}{d} k
+\quad \implies \quad
+x_1 = x_0 + \tfrac{b}{d} k.
+\]
+Plugging the first version of this equation into the left-hand side above, we
+get
+\[ \tfrac{a}{d} \cdot \tfrac{b}{d} k = \tfrac{b}{d} (y_0 - y_1) \]
+which simplifies to
+\[
+\tfrac{a}{d} k = y_0 - y_1
+\quad \implies \quad
+y_1 = y_0 - \tfrac{a}{d} k.
+\]
+This proves that any additional solution \( (x_1, y_1) \) is of the form
+prescribed by the proposition.</p>
+<p>To finish the proof, it remains to show that pairs of that form are always
+solutions.  Let \( k \) be any integer and define
+\( x_1 = x_0 + \tfrac{b}{d} k \) and \( y_1 =  y_0 - \tfrac{a}{d} k \).
+Then,
+\[
+a x_1 + b y_1
+= a(x_0 + \tfrac{b}{d} k) + b(y_0 - \tfrac{a}{d} k)
+= a x_0 + b y_0.
+\]
+Therefore, if \( (x_0, y_0) \) is a solution, then so is \( (x_1, y_1) \).</p>
+</blockquote>
+<h2><a class="header" href="#in-code-4" id="in-code-4">in code</a></h2>
+<span id="linear-equation-exercise" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write some code that takes integer inputs <code>(a, b, c)</code> and computes integer
+solutions <code>(x, y)</code> to <code>a * x + b * y = gcd(a, b)</code>.</p>
+</blockquote>
+<p>I opted to write a <code>LinearEquationSolver</code> class in ruby.  Perhaps your solution
+will have very different structure.  With the syntax I chose, the computations
+from the examples could be accomplished as follows.</p>
+<pre><code class="language-ruby">solver = LinearEquationSolver.new(322, 70, 126)
+
+solver.base_solution
+# ~&gt; [18, -81]
+
+solver.solution(-3)
+# ~&gt; [3, -12]
+
+solver.solution(-4)
+# ~&gt; [-2, 11]
+</code></pre>
+<p>I have two tests: one for when there are
+solutions, and one for when there are no solutions.</p>
+<pre><code class="language-ruby">  def test_solvable_equation
+    a, b, c = 12, 15, 99
+    solver = LinearEquationSolver.new(a, b, c)
+
+    # solvable since gcd(12, 15) == 3 &amp;&amp; 99 % 3 == 0
+    assert solver.solvable?
+
+    x, y = solver.base_solution
+    assert_equal c, a*x + b*y
+
+    (-10..10).each do |k|
+      x, y = solver.solution(k)
+      assert_equal c, a*x + b*y
+    end
+  end
+
+  def test_unsolvable_equation
+    a, b, c = 12, 15, 100
+    solver = LinearEquationSolver.new(a, b, c)
+
+    # not solvable since gcd(a, b) == 3 &amp;&amp; 100 % 3 == 1
+    assert !solver.solvable?
+
+    assert_nil solver.base_solution
+    (-10..10).each { |k| assert_nil solver.solution(k) }
+  end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('linear-equation-solver')"></button></p>
+<div id="linear-equation-solver" style="display: none;">
+<pre><code class="language-ruby">class LinearEquationSolver
+  # class to find integer solutions [x, y] to a*x + b*y == c
+
+  def initialize(a, b, c)
+    @a = a
+    @b = b
+    @c = c
+
+    @d = gcd(a, b)
+    @delta_x = b / @d
+    @delta_y = -a / @d
+    @multiplier, @remainder = div_rem(c, @d)
+  end
+
+  def solvable?
+    @remainder == 0
+  end
+
+  # solution from bezout's identity, if it exists
+  def base_solution
+    @base_solution ||= bezout(@a, @b).map { |z| z * @multiplier } if solvable?
+  end
+
+  # solutions parametrized by an integer k
+  def solution(k)
+    if solvable?
+      x, y = base_solution
+      [x + @delta_x * k, y + @delta_y * k]
+    end
+  end
 end
 </code></pre>
 </div>
