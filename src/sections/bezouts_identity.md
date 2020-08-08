@@ -230,3 +230,37 @@ cases discussed above.
 
 </div>
 
+## applications of bezout's identity
+
+Bezout's identity is a powerful tool since it gives a relationship between
+integers to their greatest common divisor.  Some proofs can be vastly
+simplified by leveraging this new capability.  Here are a few propositions
+that can be proved using Bezout's identity.
+
+> **proposition 9.**
+> The greatest common divisor of two integers is divisible by any common
+> divisor.
+
+> *proof*:
+> Let \\( k \\) be a common divisor of \\( a, b \\) and let \\( d \\) be their
+> greatest common divisor.  Bezout's lemma allows us to write \\( ax + by = d \\)
+> for some integers \\( x, y \\).  Since \\( k \\) divides both \\( a \\) and
+> \\( b \\), it divides the linear combination \\( ax + by \\), which is equal
+> to \\( d \\).
+
+<span id="divides-product-but-prime-to-first" />
+
+> **proposition 10.**
+> If an integer \\( c \\) divides a product \\( ab \\) and
+> \\( \gcd(a, c) = 1 \\), then \\( c \\) divides \\( b \\).
+
+> *proof:*
+> Since \\( \gcd(a, c) = 1 \\), then we can write \\( ax + cy = 1 \\) for some
+> integers \\( x, y \\).  Multiplying both sides by \\( b \\), we get
+> \\[ abx + bcy = b. \\]
+> The first term is divisible by \\( c \\), since \\( c \\) is assumed to
+> divide the product \\( ab \\).  The second term is divisible by \\( c \\)
+> since \\( c \\) occurs in that term.  Therefore, their sum is divisible by
+> \\( c \\), which proves that \\( b \\) is divisible by
+> \\( c \\).
+
