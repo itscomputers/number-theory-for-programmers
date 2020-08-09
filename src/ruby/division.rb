@@ -205,7 +205,7 @@ def naive_lcm(a, b)
 end
 
 #-----------------------------
-# lcm: lines 217-239, 210-214
+# lcm: lines 217-237, 210-214
 
 def lcm(a, b)
   return if a == 0 || b == 0
@@ -214,19 +214,17 @@ def lcm(a, b)
 end
 
 class TestLcm < Test::Unit::TestCase
-  def limited_test_inputs
+  def test_lcm_against_naive
     test_inputs(
       :include_zero => false,
       :include_negative => false,
       :include_reverse => false
-    )
+    ).each do |(a, b)|
+      assert_equal naive_lcm(a, b), lcm(a, b)
+    end
   end
 
   def test_lcm
-    limited_test_inputs.each do |(a, b)|
-      assert_equal naive_lcm(a, b), lcm(a, b)
-    end
-
     test_inputs(:include_zero => false).each do |(a, b)|
       assert_equal (a * b).abs, gcd(a, b) * lcm(a, b)
     end

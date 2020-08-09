@@ -124,7 +124,7 @@ proposition, even though we also rely on the proposition for the
 implementation.
 
 ```ruby
-{{#include ../ruby/division.rb:217:239}}
+{{#include ../ruby/division.rb:217:237}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('lcm')"></button>
