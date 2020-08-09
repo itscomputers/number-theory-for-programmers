@@ -205,7 +205,13 @@ def naive_lcm(a, b)
 end
 
 #-----------------------------
-# lcm: lines 219- 227, 236-240
+# lcm: lines 217-239, 210-214
+
+def lcm(a, b)
+  return if a == 0 || b == 0
+
+  ((a / gcd(a, b)) * b).abs
+end
 
 class TestLcm < Test::Unit::TestCase
   def limited_test_inputs
@@ -231,11 +237,5 @@ class TestLcm < Test::Unit::TestCase
       assert_nil lcm(a, b)
     end
   end
-end
-
-def lcm(a, b)
-  return if a == 0 || b == 0
-
-  ((a / gcd(a, b)) * b).abs
 end
 

@@ -1229,13 +1229,27 @@ to limit this type of test to just a few <em>positive</em> values since the naiv
 function is slow and restricted.  For more general test cases, we'll use the
 proposition, even though we also rely on the proposition for the
 implementation.</p>
-<pre><code class="language-ruby">  def test_lcm
+<pre><code class="language-ruby">  def limited_test_inputs
+    test_inputs(
+      :include_zero =&gt; false,
+      :include_negative =&gt; false,
+      :include_reverse =&gt; false
+    )
+  end
+
+  def test_lcm
     limited_test_inputs.each do |(a, b)|
       assert_equal naive_lcm(a, b), lcm(a, b)
     end
 
     test_inputs(:include_zero =&gt; false).each do |(a, b)|
       assert_equal (a * b).abs, gcd(a, b) * lcm(a, b)
+    end
+  end
+
+  def test_lcm_explicit
+    [[5, 0], [0, 5], [0, 0]].each do |(a, b)|
+      assert_nil lcm(a, b)
     end
   end
 </code></pre>
