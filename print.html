@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li><li class="chapter-item expanded "><a href="sections/linear_equations.html"><strong aria-hidden="true">6.</strong> linear equations</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li><li class="chapter-item expanded "><a href="sections/linear_equations.html"><strong aria-hidden="true">6.</strong> linear equations</a></li><li class="chapter-item expanded "><a href="sections/prime_numbers.html"><strong aria-hidden="true">7.</strong> prime numbers</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1512,6 +1512,107 @@ solutions, and one for when there are no solutions.</p>
 end
 </code></pre>
 </div>
+<h1><a class="header" href="#prime-numbers" id="prime-numbers">prime numbers</a></h1>
+<span id="primality-definition" />
+<blockquote>
+<p>An integer \( n \ge 2 \) is <strong>prime</strong> if its only positive divisors are
+\( 1 \) and \( n \) and <strong>composite</strong> otherwise.</p>
+</blockquote>
+<ul>
+<li>
+<p>The positive integer \( 1 \) is considered neither prime nor composite.</p>
+</li>
+<li>
+<p>The divisors \( 1 \) and \( n \) are called the <em>trivial</em> divisors of
+\( n \).  A <em>non-trivial</em> divisor is a divisor strictly between \( 1 \)
+and \( n \).  So, an integer greater than 1 is prime if it has no
+non-trivial divisors and composite if it has a trivial divisor.</p>
+</li>
+</ul>
+<p>There are 25 primes up to 100, listed below.</p>
+<pre><code class="language-ruby">PRIMES_UP_TO_100 = [
+  2, 3, 5, 7, 11,
+  13, 17, 19, 23, 29,
+  31, 37, 41, 43, 47,
+  53, 59, 61, 67, 71,
+  73, 79, 83, 89, 97,
+]
+</code></pre>
+<p>We will use this list to test the primality testing methods we write later on.</p>
+<pre><code class="language-ruby">  def assert_correct_primality_using(method)
+    (-100..1).each { |x| assert !send(method, x) }
+
+    primes, composites = (2..100).partition { |x| PRIMES_UP_TO_100.include? x }
+    primes.each { |prime| assert send(method, prime) }
+    composites.each { |composite| assert !send(method, composite) }
+  end
+</code></pre>
+<h2><a class="header" href="#naive-primality-testing" id="naive-primality-testing">naive primality testing</a></h2>
+<span id="naive-primality-v1" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write an <code>is_prime_naive_v1?</code> function that takes an integer input and
+returns <code>true</code> if it is prime and <code>false</code> otherwise.  It should only use
+only the definition.</p>
+</blockquote>
+<pre><code class="language-ruby">  def test_is_prime_naive_v1
+    assert_correct_primality_using :is_prime_naive_v1?
+  end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('is_prime_naive_v1')"></button></p>
+<div id="is_prime_naive_v1" style="display: none;">
+<pre><code class="language-ruby">def is_prime_naive_v1?(number)
+  return false if number &lt; 2
+  (2...number).none? { |x| number % x == 0 }
+end
+</code></pre>
+</div>
+<h2><a class="header" href="#an-improvement-to-naive-primality-testing" id="an-improvement-to-naive-primality-testing">an improvement to naive primality testing</a></h2>
+<span id="check-divisors-up-to-square-root" />
+<blockquote>
+<p><strong>proposition 13.</strong>
+If an integer \( n \ge 2 \) is composite, then it has a divisor
+\( d \le \sqrt{n} \).</p>
+</blockquote>
+<blockquote>
+<p><em>proof:</em>
+We will prove this by contradiction.  Suppose that a number \( n \) is
+composite and taht is has no divisor less than or equal to its square root.
+Since it is composite, it may be expressed as \( n = ab \) for some pair of
+integers \( a, b \).  By hypothesis, both of these integers must be greater
+than \( \sqrt{n} \).  Then
+\[ n = a \cdot b &gt; \sqrt{n} \cdot \sqrt{n} = n, \]
+which is a contradiction since an integer cannot be greater than itself.</p>
+</blockquote>
+<p>The proposition may also be restated in its contrapositive form.</p>
+<blockquote>
+<p><strong>proposition 13.</strong>
+If an integer \( n \ge 2 \) has no divisor less than or equal to its square
+root, then it is prime.</p>
+</blockquote>
+<p>This rephrasing results in a substantial speed-up to our primality test above.</p>
+<span id="naive-primality" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write an improved <code>is_prime_naive?</code> function that takes an integer input and
+returns <code>true</code> if it is prime and <code>false</code> otherwise.  It should use both the
+definition and the proposition.</p>
+</blockquote>
+<pre><code class="language-ruby">  def test_is_prime_naive
+    assert_correct_primality_using :is_prime_naive?
+  end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('is_prime_naive')"></button></p>
+<div id="is_prime_naive" style="display: none;">
+<pre><code class="language-ruby">def is_prime_naive?(number)
+  return false if number &lt; 2
+  (2..).take_while { |x| x**2 &lt;= number }.none? { |x| number % x == 0 }
+end
+</code></pre>
+</div>
+<p>This algorithm is still quite slow. Its time complexity grows as the square
+root of the input.  We will develop some probabilistic methods that are very
+fast in a later section.</p>
 
                     </main>
 

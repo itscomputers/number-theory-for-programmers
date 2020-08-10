@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>divisibility - number theory for programmers</title>
+        <title>prime numbers - number theory for programmers</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html" class="active"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="../sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="../sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li><li class="chapter-item expanded "><a href="../sections/linear_equations.html"><strong aria-hidden="true">6.</strong> linear equations</a></li><li class="chapter-item expanded "><a href="../sections/prime_numbers.html"><strong aria-hidden="true">7.</strong> prime numbers</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../sections/divisibility.html"><strong aria-hidden="true">1.</strong> divisibility</a></li><li class="chapter-item expanded "><a href="../sections/division_with_remainder.html"><strong aria-hidden="true">2.</strong> division with remainder</a></li><li class="chapter-item expanded "><a href="../sections/greatest_common_divisor.html"><strong aria-hidden="true">3.</strong> greatest common divisor</a></li><li class="chapter-item expanded "><a href="../sections/bezouts_identity.html"><strong aria-hidden="true">4.</strong> bezout's identity</a></li><li class="chapter-item expanded "><a href="../sections/least_common_multiple.html"><strong aria-hidden="true">5.</strong> least common multiple</a></li><li class="chapter-item expanded "><a href="../sections/linear_equations.html"><strong aria-hidden="true">6.</strong> linear equations</a></li><li class="chapter-item expanded "><a href="../sections/prime_numbers.html" class="active"><strong aria-hidden="true">7.</strong> prime numbers</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,222 +151,118 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#divisibility" id="divisibility">divisibility</a></h1>
-<p>This study of integers begins with the notion of divisibility: whether the
-division of two integers results in an integer.  Because of the volatile nature
-of division, we frame this question in terms of integer multiplication.</p>
+                        <h1><a class="header" href="#prime-numbers" id="prime-numbers">prime numbers</a></h1>
+<span id="primality-definition" />
 <blockquote>
-<p>A nonzero integer \( b \) <strong>divides</strong> an integer \( a \) if there exists
-some integer \( n \) such that \( a = bn \).</p>
+<p>An integer \( n \ge 2 \) is <strong>prime</strong> if its only positive divisors are
+\( 1 \) and \( n \) and <strong>composite</strong> otherwise.</p>
 </blockquote>
-<p>Here are a few examples:</p>
 <ul>
-<li>15 divides 45 since \( 45 = 15 \cdot 3 \)</li>
-<li>9 divides 45 since \( 45 = 9 \cdot 5 \)</li>
-<li>10 does not divide 45 since 45 is between
-\( 40 = 10 \cdot 4 \) and \( 50 = 10 \cdot 5 \)</li>
+<li>
+<p>The positive integer \( 1 \) is considered neither prime nor composite.</p>
+</li>
+<li>
+<p>The divisors \( 1 \) and \( n \) are called the <em>trivial</em> divisors of
+\( n \).  A <em>non-trivial</em> divisor is a divisor strictly between \( 1 \)
+and \( n \).  So, an integer greater than 1 is prime if it has no
+non-trivial divisors and composite if it has a trivial divisor.</p>
+</li>
 </ul>
-<p>The above definition is synonymous with saying that \( b \)
-may be expressed as a multiple of \( a \).  In fact, the following
-statements are equivalent and mean that \( a \) is can be expressed as
-\( bn \).</p>
-<ul>
-<li>\( b \) divides \( a \)</li>
-<li>\( b \) is a divisor of \( a \)</li>
-<li>\( a \) is divisible by \( b \)</li>
-<li>\( a \) is a multiple of \( b \)</li>
-</ul>
-<p>The notation for this concept is \( b \mid a \), which reads &quot;\( b \)
-divides \( a \)&quot;.  Using this notation, the examples above become:</p>
-<ul>
-<li>\( 15 \mid 45 \) since \( 45 = 15 \cdot 3 \)</li>
-<li>\( 9 \mid 45 \) since \( 45 = 9 \cdot 5 \)</li>
-<li>\( 10 \nmid 45 \) since \( 10 \cdot 4 &lt; 45 &lt; 10 \cdot 5 \)</li>
-</ul>
-<p>Be careful!  This notation may sometimes be confused with the division
-operation. If you see \( 15 / 45 \), it is the operation that returns
-the rational number \( 1/3 \).  If you see \( 15 \mid 45 \), it is the
-statement that \( 45 \) is divisible by \( 15 \), ie, that \( 45 / 15 \)
-is an integer.</p>
-<span id="divides-exercise" />
+<p>There are 25 primes up to 100, listed below.</p>
+<pre><code class="language-ruby">PRIMES_UP_TO_100 = [
+  2, 3, 5, 7, 11,
+  13, 17, 19, 23, 29,
+  31, 37, 41, 43, 47,
+  53, 59, 61, 67, 71,
+  73, 79, 83, 89, 97,
+]
+</code></pre>
+<p>We will use this list to test the primality testing methods we write later on.</p>
+<pre><code class="language-ruby">  def assert_correct_primality_using(method)
+    (-100..1).each { |x| assert !send(method, x) }
+
+    primes, composites = (2..100).partition { |x| PRIMES_UP_TO_100.include? x }
+    primes.each { |prime| assert send(method, prime) }
+    composites.each { |composite| assert !send(method, composite) }
+  end
+</code></pre>
+<h2><a class="header" href="#naive-primality-testing" id="naive-primality-testing">naive primality testing</a></h2>
+<span id="naive-primality-v1" />
 <blockquote>
 <p><strong>exercise.</strong>
-Using <strong>only</strong> addition, multiplication, and comparison, write a <code>divides</code>
-function that takes as input two <em>positive</em> integers <code>b</code> and <code>a</code> and returns
-<code>true</code> if <code>b</code> divides <code>a</code> and <code>false</code> otherwise.</p>
+Write an <code>is_prime_naive_v1?</code> function that takes an integer input and
+returns <code>true</code> if it is prime and <code>false</code> otherwise.  It should only use
+only the definition.</p>
 </blockquote>
-<p>With such a <code>divides?</code> function in ruby, the following code should yield the
-terminal output below.</p>
-<pre><code class="language-ruby">  [
-    [25, 0],
-    [31, 432],
-    [87, 87*58],
-    [99, 9900],
-    [9900, 99],
-  ].each do |(b, a)|
-    if divides?(b, a)
-      puts &quot;#{b} divides #{a}&quot;
-    else
-      puts &quot;#{b} does not divide #{a}&quot;
-    end
+<pre><code class="language-ruby">  def test_is_prime_naive_v1
+    assert_correct_primality_using :is_prime_naive_v1?
   end
 </code></pre>
-<pre><code>25 divides 0
-31 does not divide 432
-87 divides 5046
-99 divides 9900
-9900 does not divide 99
-</code></pre>
-<p>Click the button below to show an implementation of a simple <code>divides?</code>
-function in ruby.</p>
-<p><button class="fa fa-expand" onClick="showContent('divides')"></button></p>
-<div id="divides" style="display: none;">
-<pre><code class="language-ruby">def divides?(b, a)
-  m = 0
-  while m &lt; a
-    m += b
-  end
-
-  m == a
+<p><button class="fa fa-expand" onClick="showContent('is_prime_naive_v1')"></button></p>
+<div id="is_prime_naive_v1" style="display: none;">
+<pre><code class="language-ruby">def is_prime_naive_v1?(number)
+  return false if number &lt; 2
+  (2...number).none? { |x| number % x == 0 }
 end
 </code></pre>
 </div>
-<h2><a class="header" href="#linear-combinations" id="linear-combinations">linear combinations</a></h2>
+<h2><a class="header" href="#an-improvement-to-naive-primality-testing" id="an-improvement-to-naive-primality-testing">an improvement to naive primality testing</a></h2>
+<span id="check-divisors-up-to-square-root" />
 <blockquote>
-<p>An <strong>integer linear combination</strong> of integers \( a \) and \( b \) is an
-integer of the form \( ax + by \) where \( x \) and \( y \) are integers.</p>
-</blockquote>
-<p>For example, 11 through 15 can all be expressed as linear
-combinations of 5 and 6.  Here are two examples of each.</p>
-<p>\[\begin{align}
-5(1) + 6(1) &amp;= 11 = 5(7) + 6(-4) \\
-5(0) + 6(2) &amp;= 12 = 5(6) + 6(-3) \\
-5(-1) + 6(3) &amp;= 13 = 5(5) + 6(-2) \\
-5(-2) + 6(4) &amp;= 14 = 5(4) + 6(-1) \\
-5(-3) + 6(5) &amp;= 15 = 5(3) + 6(0) \\
-\end{align}\]</p>
-<p>The following proposition about integer linear combinations will be used
-often.</p>
-<span id="linear-combination" />
-<blockquote>
-<p><strong>proposition 1.</strong>
-If \( d \) is a common divisor of \( a \) and \( b \), then \( d \)
-divides any integer linear combination of \( a \) and \( b \).</p>
+<p><strong>proposition 13.</strong>
+If an integer \( n \ge 2 \) is composite, then it has a divisor
+\( d \le \sqrt{n} \).</p>
 </blockquote>
 <blockquote>
 <p><em>proof:</em>
-Suppose that \( d \) divides \( a \) and \( b \).  By definition, there
-exist integers \( m, n \) such that \( a = dm \) and \( b = dn \).  Let
-\( c = ax + by \) be an integer linear combination of \( a \) and
-\( b \).  For any linear combination \( ax + by \),
-\[ ax + by = (dm)x + (dn)y = d(mx + ny). \]
-Since \( mx + ny \) is an integer, the linear combination is divisible by
-\( d \).</p>
+We will prove this by contradiction.  Suppose that a number \( n \) is
+composite and taht is has no divisor less than or equal to its square root.
+Since it is composite, it may be expressed as \( n = ab \) for some pair of
+integers \( a, b \).  By hypothesis, both of these integers must be greater
+than \( \sqrt{n} \).  Then
+\[ n = a \cdot b &gt; \sqrt{n} \cdot \sqrt{n} = n, \]
+which is a contradiction since an integer cannot be greater than itself.</p>
 </blockquote>
-<span id="exercises" />
-<h2><a class="header" href="#exercises" id="exercises">exercises</a></h2>
-<ol>
-<li>
-<p>Prove that any nonzero integer divides 0.</p>
-</li>
-<li>
-<p>Prove that 1 and -1 divide any integer.</p>
-</li>
-<li>
-<p>Prove that any nonzero integer divides itself.</p>
-</li>
-<li>
-<p>If \( a \) and \( b \) are positive integers and \( b \) divides \( a
-\), prove that \( b \le a \).</p>
-</li>
-<li>
-<p>Prove that two positive integers that divide each other must be equal.</p>
-</li>
-<li>
-<p>Prove that the <strong>divides</strong> relation is <em>transitive</em>: if \( c \mid b \) and
-\( b \mid a \), prove that \( c \mid a \).</p>
-</li>
-<li>
-<p>If \( d \) divides both \( a \) and \( b \), prove that \( d \)
-divides their sum \( a + b \).</p>
-</li>
-<li>
-<p>Disprove the converse of the previous exercise by producing a
-counter-example.</p>
-</li>
-<li>
-<p>If \( d \) divides either \( a \) or \( b \), prove that \( d \)
-divides their product \( ab \).</p>
-</li>
-<li>
-<p>Disprove the converse of the previous exercise by producing a
-counter-example.</p>
-</li>
-</ol>
-<p><button onClick="showContent('solutions')">show solutions</button></p>
-<div id="solutions" style="display: none;">
-<ol>
-<li>
-<p>For \( n \) nonzero, we have \( 0 = n \cdot 0 \), so \( n \) divides
-\( 0 \).</p>
-</li>
-<li>
-<p>For any \( n \), we have \( n = 1 \cdot n \) and \( n = -1 \cdot -n \),
-so both \( 1 \) and \( -1 \) divide \( n \).</p>
-</li>
-<li>
-<p>For \( n \) nonzero, we have \( n = n \cdot 1 \), so \( n \) divides
-itself.</p>
-</li>
-<li>
-<p>Let \( a \) and \( b \) be positive integers such that
-\( b \mid a \).  Then \( a = bk \) for some integer \( k \).
-Since \( a \) and \( b \) are both positive, then so is \ ( k \).
-This means that \( k \ge 1 \), which implies that \( a = bk \ge b \).</p>
-</li>
-<li>
-<p>Let \( a \) and \( b \) be two positive integers that divide each other.
-From the previous exercise, we have \( a \le b \) and \( b \le a \), so
-\( a \) and \( b \) must be equal.</p>
-</li>
-<li>
-<p>Suppose that \( c \mid b \) and \( b \mid a \).  We can write
-\( c = bm \) and \( b = an \).  Therefore, \( c = (an)m = a(mn) \),
-which proves that \(c \mid a \).</p>
-</li>
-<li>
-<p>Since the sum \( a + b \) is a linear combination of \( a \) and
-\( b \), then the proposition implies that \( a + b \) is divisible by
-any common divisor \( d \) of \( a \) and \( b \).</p>
-</li>
-<li>
-<p>Take \( a = 3 \), \( b = 7 \), and \( d = 5 \).  Then \( d \)
-divides the sum \( a + b = 10 \) but does not divide either \( a \) or
-\( b \).</p>
-</li>
-<li>
-<p>If \( d \) divides \( a \), then \( a = dn \), so \( ab = d(bn) \).
-If \( d \) divides \( b \), then \( b = dm \), so \( ab = d(am) \).
-Either way, \( d \) divides the product \( ab \).</p>
-</li>
-<li>
-<p>Take \( a = 4 \), \( b = 3 \), and \( d = 6 \).  Then \( d \)
-divides the product \( ab = 12 \) but does not divide either \( a \) or
-\( b \).</p>
-</li>
-</ol>
+<p>The proposition may also be restated in its contrapositive form.</p>
+<blockquote>
+<p><strong>proposition 13.</strong>
+If an integer \( n \ge 2 \) has no divisor less than or equal to its square
+root, then it is prime.</p>
+</blockquote>
+<p>This rephrasing results in a substantial speed-up to our primality test above.</p>
+<span id="naive-primality" />
+<blockquote>
+<p><strong>exercise.</strong>
+Write an improved <code>is_prime_naive?</code> function that takes an integer input and
+returns <code>true</code> if it is prime and <code>false</code> otherwise.  It should use both the
+definition and the proposition.</p>
+</blockquote>
+<pre><code class="language-ruby">  def test_is_prime_naive
+    assert_correct_primality_using :is_prime_naive?
+  end
+</code></pre>
+<p><button class="fa fa-expand" onClick="showContent('is_prime_naive')"></button></p>
+<div id="is_prime_naive" style="display: none;">
+<pre><code class="language-ruby">def is_prime_naive?(number)
+  return false if number &lt; 2
+  (2..).take_while { |x| x**2 &lt;= number }.none? { |x| number % x == 0 }
+end
+</code></pre>
 </div>
+<p>This algorithm is still quite slow. Its time complexity grows as the square
+root of the input.  We will develop some probabilistic methods that are very
+fast in a later section.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="../sections/division_with_remainder.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="../sections/linear_equations.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -376,11 +272,11 @@ divides the product \( ab = 12 \) but does not divide either \( a \) or
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a rel="next" href="../sections/division_with_remainder.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="../sections/linear_equations.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 
