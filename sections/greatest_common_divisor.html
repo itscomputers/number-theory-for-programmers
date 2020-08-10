@@ -283,13 +283,10 @@ result from each step.</p>
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('euclidean_algorithm')"></button></p>
 <div id="euclidean_algorithm" style="display: none;">
-<pre><code class="language-ruby">def euclidean_algorithm(a, b)
-  while b != 0
-    quo, rem = div_rem(a, b)
-    puts &quot;#{a} == #{b} * #{quo} + #{rem}&quot;
-    a, b = b, rem
-  end
+<pre><code class="language-ruby">
+  ((a / gcd(a, b)) * b).abs
 end
+
 </code></pre>
 </div>
 <h2><a class="header" href="#computation-of-gcd" id="computation-of-gcd">computation of gcd</a></h2>

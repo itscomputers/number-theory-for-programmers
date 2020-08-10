@@ -647,13 +647,10 @@ result from each step.</p>
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('euclidean_algorithm')"></button></p>
 <div id="euclidean_algorithm" style="display: none;">
-<pre><code class="language-ruby">def euclidean_algorithm(a, b)
-  while b != 0
-    quo, rem = div_rem(a, b)
-    puts &quot;#{a} == #{b} * #{quo} + #{rem}&quot;
-    a, b = b, rem
-  end
+<pre><code class="language-ruby">
+  ((a / gcd(a, b)) * b).abs
 end
+
 </code></pre>
 </div>
 <h2><a class="header" href="#computation-of-gcd" id="computation-of-gcd">computation of gcd</a></h2>
@@ -1479,8 +1476,7 @@ solutions, and one for when there are no solutions.</p>
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('linear-equation-solver')"></button></p>
 <div id="linear-equation-solver" style="display: none;">
-<pre><code class="language-ruby">class LinearEquationSolver
-  # class to find integer solutions [x, y] to a*x + b*y == c
+<pre><code class="language-ruby">  # class to find integer solutions [x, y] to a*x + b*y == c
 
   def initialize(a, b, c)
     @a = a
@@ -1510,6 +1506,7 @@ solutions, and one for when there are no solutions.</p>
     end
   end
 end
+
 </code></pre>
 </div>
 <h1><a class="header" href="#prime-numbers" id="prime-numbers">prime numbers</a></h1>
@@ -1561,10 +1558,10 @@ only the definition.</p>
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('is_prime_naive_v1')"></button></p>
 <div id="is_prime_naive_v1" style="display: none;">
-<pre><code class="language-ruby">def is_prime_naive_v1?(number)
+<pre><code class="language-ruby">
+def is_prime_naive_v1?(number)
   return false if number &lt; 2
   (2...number).none? { |x| number % x == 0 }
-end
 </code></pre>
 </div>
 <h2><a class="header" href="#an-improvement-to-naive-primality-testing" id="an-improvement-to-naive-primality-testing">an improvement to naive primality testing</a></h2>

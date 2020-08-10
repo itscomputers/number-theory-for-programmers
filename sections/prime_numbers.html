@@ -200,10 +200,10 @@ only the definition.</p>
 </code></pre>
 <p><button class="fa fa-expand" onClick="showContent('is_prime_naive_v1')"></button></p>
 <div id="is_prime_naive_v1" style="display: none;">
-<pre><code class="language-ruby">def is_prime_naive_v1?(number)
+<pre><code class="language-ruby">
+def is_prime_naive_v1?(number)
   return false if number &lt; 2
   (2...number).none? { |x| number % x == 0 }
-end
 </code></pre>
 </div>
 <h2><a class="header" href="#an-improvement-to-naive-primality-testing" id="an-improvement-to-naive-primality-testing">an improvement to naive primality testing</a></h2>
