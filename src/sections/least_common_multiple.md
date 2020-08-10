@@ -47,7 +47,7 @@ by the other.  For example, to compute \\( \operatorname{lcm}(154, 56) \\)
 <div id="naive_lcm" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:194:205}}
+{{#include ../ruby/division.rb:85:96}}
 ```
 
 </div>
@@ -124,16 +124,15 @@ proposition, even though we also rely on the proposition for the
 implementation.
 
 ```ruby
-{{#include ../ruby/division.rb:217:237}}
+{{#include ../ruby/tests/test_division.rb:124:144}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('lcm')"></button>
 <div id="lcm" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:210:214}}
+{{#include ../ruby/division.rb:101:105}}
 ```
 
 </div>
-
 

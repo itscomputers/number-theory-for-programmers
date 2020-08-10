@@ -47,7 +47,7 @@ example, to compute \\( \gcd(322, 70) \\)
 <div id="naive_gcd" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:88:98}}
+{{#include ../ruby/division.rb:27:37}}
 ```
 
 </div>
@@ -113,7 +113,7 @@ computed without explicitly finding **any** of the divisors.
 Running the following code should produce the output below.
 
 ```ruby
-{{#include ../ruby/division.rb:112}}
+{{#include ../ruby/tests/test_division.rb:54}}
 ```
 
 ```
@@ -196,14 +196,14 @@ implementation, `nil` is returned when the inputs are both zero.  You may opt
 to do some error handling instead a null return value.
 
 ```ruby
-{{#include ../ruby/division.rb:129:156}}
+{{#include ../ruby/tests/test_division.rb:78:105}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('gcd')"></button>
 <div id="gcd" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:118:126}}
+{{#include ../ruby/division.rb:53:61}}
 ```
 
 </div>

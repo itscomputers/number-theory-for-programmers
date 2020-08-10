@@ -218,14 +218,14 @@ identity must be satisfied.  Make sure you include test inputs for the special
 cases discussed above.
 
 ```ruby
-{{#include ../ruby/division.rb:179:188}}
+{{#include ../ruby/tests/test_division.rb:110:119}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('bezout')"></button>
 <div id="bezout" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:162:176}}
+{{#include ../ruby/division.rb:66:80}}
 ```
 
 </div>

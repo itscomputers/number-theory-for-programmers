@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "running ruby tests"
-ruby src/ruby/tests.rb
+ruby src/ruby/tests/all.rb
 
 echo "deploying to github"
 git worktree add /tmp/book gh-pages

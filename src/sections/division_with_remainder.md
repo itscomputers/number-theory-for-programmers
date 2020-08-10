@@ -91,7 +91,7 @@ am specifically suppressing test inputs where the arguments could be zero since
 `div_rem(a, b)` is undefined when `b == 0`.
 
 ```ruby
-{{#include ../ruby/division.rb:74:82}}
+{{#include ../ruby/tests/test_division.rb:65:73}}
 ```
 
 Click the expand button to see an implementation of `div_rem` in ruby.
@@ -100,7 +100,7 @@ Click the expand button to see an implementation of `div_rem` in ruby.
 <div id="div_rem" style="display: none;">
 
 ```ruby
-{{#include ../ruby/division.rb:65:71}}
+{{#include ../ruby/division.rb:16:22}}
 ```
 
 </div>

@@ -201,7 +201,7 @@ I have two tests: one for when there are
 solutions, and one for when there are no solutions.
 
 ```ruby
-{{#include ../ruby/linear_equation_solver.rb:40:65}}
+{{#include ../ruby/tests/test_linear_equation_solver.rb:7:32}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('linear-equation-solver')"></button>

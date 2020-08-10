@@ -15,13 +15,13 @@
 There are 25 primes up to 100, listed below.
 
 ```ruby
-{{#include ../ruby/primality.rb:7:13}}
+{{#include ../ruby/tests/test_primality.rb:6:12}}
 ```
 
 We will use this list to test the primality testing methods we write later on.
 
 ```ruby
-{{#include ../ruby/primality.rb:26:32}}
+{{#include ../ruby/tests/test_primality.rb:19:25}}
 ```
 
 ## naive primality testing
@@ -34,14 +34,14 @@ We will use this list to test the primality testing methods we write later on.
 > only the definition.
 
 ```ruby
-{{#include ../ruby/primality.rb:34:36}}
+{{#include ../ruby/tests/test_primality.rb:30:32}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('is_prime_naive_v1')"></button>
 <div id="is_prime_naive_v1" style="display: none;">
 
 ```ruby
-{{#include ../ruby/primality.rb:15:18}}
+{{#include ../ruby/primality.rb:6:9}}
 ```
 
 </div>
@@ -79,14 +79,14 @@ This rephrasing results in a substantial speed-up to our primality test above.
 > definition and the proposition.
 
 ```ruby
-{{#include ../ruby/primality.rb:38:40}}
+{{#include ../ruby/tests/test_primality.rb:37:39}}
 ```
 
 <button class="fa fa-expand" onClick="showContent('is_prime_naive')"></button>
 <div id="is_prime_naive" style="display: none;">
 
 ```ruby
-{{#include ../ruby/primality.rb:20:23}}
+{{#include ../ruby/primality.rb:15:18}}
 ```
 
 </div>
