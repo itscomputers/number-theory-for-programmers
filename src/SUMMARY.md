@@ -6,4 +6,5 @@
 - [bezout's identity](./sections/bezouts_identity.md)
 - [least common multiple](./sections/least_common_multiple.md)
 - [linear equations](./sections/linear_equations.md)
+- [prime numbers](./sections/prime_numbers.md)
 
